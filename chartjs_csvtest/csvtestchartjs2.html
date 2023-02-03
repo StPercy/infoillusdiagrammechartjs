@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="text/javascript" src="https://d3js.org/d3.v7.min.js"></script>
+  
+  <style>
+
+body {
+  font-family: 'Roboto';
+  color: #333;
+  background-color: #F9F7EB;
+}
+
+#title {
+  font-family: 'Merriweather';
+  text-align: center;
+  padding: 30px;
+  font-size: 28px;
+  letter-spacing: -0.01em;
+  color: #333;
+}
+
+#legend {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 10px 10px;
+  font-size: 12px;
+}
+
+#legend .item {
+  line-height: 12px;
+  padding: 0 10px 0 4px;
+}
+
+#legend .item.male {
+  border-left: 12px solid #003063;
+}
+
+#legend .item.female {
+  border-left: 12px solid #e10019;
+}
+
+
+#chart-wrapper {
+  height: 1000px;
+}
+
+#footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 10px;
+  color: #aaa;
+  font-size: 12px;
+}
+
+#footer a {
+  color: #aaa;
+}
+
+  </style>
+  <title>Document</title>
+</head>
+<body>
+
+  <script>
+
+
+//Chart.defaults.global.defaultFontFamily = 'Roboto';
+// Chart.defaults.global.defaultFontColor = '#333';
+function makeChart(players) {
+  // players is an array of objects where each object is something like:
+  // {
+  //   "Name": "Steffi Graf",
+  //   "Weeks": "377",
+  //   "Gender": "Female"
+  // }
+
+  var playerLabels = players.map(function(d) {return d.Name});
+  var weeksData = players.map(function(d) {return +d.Weeks});
+  var playerColors = players.map(function(d) {return d.Gender === 'Female' ? '#e10019' : '#003063';});
+
+  var chart = new Chart('chart', {
+    type: 'bar',
+    options: {
+      indexAxis: 'x',
+      maintainAspectRatio: false,
+      legend: {
+        display: false
+      },
+      scales: {
+        xAxes: [
+          {
+            scaleLabel: {
+              display: true,
+              labelString: 'Weeks at No.1',
+              fontSize: 16
+            }
+          }
+        ]
+      }
+    },
+    data: {
+      labels: playerLabels,
+      datasets: [
+        {
+          data: weeksData,
+          backgroundColor: playerColors
+        }
+      ]
+    }
+  })
+}
+
+// Request data using D3
+d3.csv("chartjsdata.csv")
+  .then(makeChart);
+
+  </script>
+
+<div id="title">Which tennis player was No.1 the longest?</div>
+<div id="legend">
+  <div class="item female">Women</div>
+  <div class="item male">Men</div>
+</div>
+<div id="chart-wrapper">
+  <canvas id="chart"></canvas>
+</div>
+<div id="footer">
+  <div class="left" ><a href="https://createwithdata.com/chartjs-and-csv/" target="_blank">About</a></div>
+  <div class="right">Source: <a href="https://public.tableau.com/en-us/s/resources" target="_blank">Tableau</a> / Wikipedia</div>
+</div>
+
+
+</body>
+</html>

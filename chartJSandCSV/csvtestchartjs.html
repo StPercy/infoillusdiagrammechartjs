@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChartJSandCSV</title>
+  <style>
+    .chartBox{
+      width:700px;
+    }
+  </style>
+</head>
+<body>
+<!-- 2.our canvas to show the chart-->
+  <div class="chartBox">
+    <canvas id="myChart"></canvas>
+  </div> 
+  <textarea name="textarea" id="csvData" cols="30" rows="10">cost,profit,revenue
+1,2,3
+10,20,30
+22,23,24
+1,2,0
+1,2,30
+1,2,30
+1,2,30
+
+</textarea>
+
+<!-- 1. load data first! by using PapaParse to parse the data-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js" integrity="sha512-SGWgwwRA8xZgEoKiex3UubkSkV1zSE1BS6O4pXcaxcNtUlQsOmOmhVnDwIvqGRfEmuz83tIGL13cXMZn6upPyg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    const csvData = document.getElementById('csvData').value;
+
+    //console.log(Papa.parse(csvData, {
+    //  header: true,
+    //  skipEmptyLines: true
+    //}))
+
+   const dataFile = Papa.parse(csvData, {
+      header: true,
+      skipEmptyLines: true
+    })
+ 
+    const cost = [];
+    const profit = [];
+    const revenue = [];
+    for (i = 0; i < dataFile.data.length; i++ ) {
+      cost.push( dataFile.data[i].cost );
+      profit.push( dataFile.data[i].profit );
+      revenue.push( dataFile.data[i].revenue );
+    }
+    console.log(cost);
+  </script>
+<!-- 3. using chartjs to make the chart -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  
+  const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [
+        {
+        label: 'costs',
+        data: cost,
+        borderWidth: 1
+        },
+        {
+        label: 'profit',
+        data: profit,
+        borderWidth: 1
+        },
+        {
+        label: 'revenue',
+        data: revenue,
+        borderWidth: 1
+        },]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  
+</script> 
+<!-- <script src="https://d3js.org/d3.v7.min.js"></script> 
+      <script>
+        //grab the data:
+        //const chartData = "http://127.0.0.1:5500/ivm1/chartjsdata.csv";
+  
+        //parse the file form CSV to JSON with d3:
+    
+        /* d3.csv(chartData).then(function(datapoints) {
+            console.log(datapoints);
+            const jahr = [];
+            const gesamtdauer = [];
+
+            for (i=0; i < datapoints.length; i++) {
+            jahr.push(datapoints[i].jahr)
+            gesamtdauer.push(datapoints[i].gesamtdauer)
+            }
+          });
+          */
+      </script>-->  
+</body>
+</html>
