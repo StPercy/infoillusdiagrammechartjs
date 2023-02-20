@@ -110,17 +110,17 @@
         labels: datapoints.labels,
 
         datasets: [{
-          label: /*datapoints.unterbrechungenname*/'Sperrwerk',
+          label: /*datapoints.anzahlname*/'Pegel Blankenese (Este-Sperrwerk, Thw≥280 cm NHN)',
           type: 'bar',
-          data: datapoints.unterbrechungendata,
+          data: datapoints.anzahldata1,
           backgroundColor: ['#e10019'],
           borderColor: ['#e10019'],
           //tension: 0.4
         },
         {
-          label: /*datapoints.unterbrechungenname*/'Billwerder Bucht',
+          label: /*datapoints.anzahlname*/'Pegel Schöpfstelle (Sperrwerk Billwerder Bucht, Thw≥350 cm NHN)',
           type: 'bar',
-          data: datapoints.unterbrechungendata,
+          data: datapoints.anzahldata2,
           backgroundColor: ['#003063'],
           borderColor: ['#003063'],
           //tension: 0.4
@@ -138,7 +138,7 @@
               max: 50,
               title: {
                 display: true,
-                text: 'Überlaufmenge (m³)',
+                text: 'Mittlere jährliche Überschreitung des Schließwasserstands (Anzahl)',
                 color: 'black',
                 align: 'center',
                 font: {
@@ -178,7 +178,7 @@
               display:true,
               position: 'bottom',
               align: 'end',
-              text: 'Datenquelle: HamburgWasser (Jahresberichte "Eigenüberwachung im Rahmen der Wasserrechtlichen Erlaubnisse für Sonderauslässe")',
+              text: 'Datenquelle: HPA (Pegelmessungen)',
               color: 'black',
               font: {
                 size: 12
@@ -201,7 +201,8 @@
     // 2. step fetch the data asynchronously:
     async function getData(){
       const labels = [];
-      const unterbrechungendata = [];
+      const anzahldata1 = [];
+      const anzahldata2 = [];
       const url = './ikh3.csv';
       //const url = 'http://127.0.0.1:5500/chartjs3_csvfetch/ivm1.csv';
       const response = await fetch(url);
@@ -212,24 +213,30 @@
       table.forEach(row => {
         const column = row.split(',');
         const jahr = column[0];
-        const unterbrechungen = column[1];
+        const anzahl1 = column[1];
+        const anzahl2 = column[2];
         labels.push(jahr);
-        unterbrechungendata.push(unterbrechungen);
+        anzahldata1.push(anzahl1);
+        anzahldata2.push(anzahl2);
       });
-      // setting the name of the datacolumn "Gesamtdauer Unterbrechungen" by using slice() to exclude everything but the name
-      const unterbrechungenname = unterbrechungendata.slice(0,1);
+      // setting the name of the datacolumn "Gesamtdauer anzahl" by using slice() to exclude everything but the name
+      const anzahlname1 = anzahldata1.slice(0,1);
+      const anzahlname2 = anzahldata2.slice(0,1);
 
-      //remove 'jahr' in labels shown on x-axis via shift(), and 'unterbrechungen' in unterbrechungendata shown in chart
-      labels.shift();
-      unterbrechungendata.shift();
+      //In this case: DO NOT remove(shift();) 'jahr' in labels shown on x-axis via shift(), and 'anzahl' in anzahldata shown in chart
+      //labels.shift();
+      //anzahldata1.shift();
+      //anzahldata2.shift();
 
 
 
       console.log(labels);
-      console.log(unterbrechungendata);
-      console.log(unterbrechungenname);
+      console.log(anzahldata1);
+      console.log(anzahldata2);
+      console.log(anzahlname1);
+      console.log(anzahlname2);
 
-      return { labels, unterbrechungendata, unterbrechungenname }
+      return { labels, anzahldata1, anzahldata2, anzahlname1, anzahlname2 }
     }
   </script>
 
