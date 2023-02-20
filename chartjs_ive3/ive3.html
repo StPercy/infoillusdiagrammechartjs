@@ -49,7 +49,7 @@
     width: 90%;
     height: 45%;
     margin: 10px;
-    padding: 20px;     
+    padding: 20px;
   }
 }
 @media only screen and (max-width: 500px) {
@@ -74,7 +74,7 @@
     height: 45%;
     margin: 0;
     padding: 20px;
-  } 
+  }
 }
 @media only screen and (max-width: 281px) {
   .chartBox {
@@ -82,7 +82,7 @@
     height: 45%;
     margin: 10px;
     padding: 20px;
-  } 
+  }
 }
   </style>
 </head>
@@ -95,11 +95,11 @@
       <!-- <button onclick="getData()">get Data in Console</button> -->
     </div>
   </div>
- 
+
 <!-- JS Scripts -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    // 1. step use this function from below 
+    // 1. step use this function from below
     drawChart();
 
     // setup and 1.1 step implementing async function drawChart()
@@ -108,18 +108,18 @@
       const data = {
         //labels on x-axis:
         labels: datapoints.labels,
-        
+
         datasets: [{
-          label: /*datapoints.unterbrechungenname*/'Überlaufmenge ⇘',
+          label: /*datapoints.ueberlaufmengename*/'Überlaufmenge ⇘',
           type: 'bar',
-          data: datapoints.unterbrechungendata,
+          data: datapoints.ueberlaufmengedata,
           backgroundColor: ['#003063'],
           borderColor: ['#003063'],
           //tension: 0.4
         }]
       };
 
-      // config 
+      // config
       const config = {
         type: 'bar',
         data,
@@ -140,7 +140,7 @@
               }
             }
           },
-          
+
           plugins: {
 
             legend: {
@@ -193,7 +193,7 @@
     // 2. step fetch the data asynchronously:
     async function getData(){
       const labels = [];
-      const unterbrechungendata = [];
+      const ueberlaufmengedata = [];
       const url = './ive3.csv';
       //const url = 'http://127.0.0.1:5500/chartjs3_csvfetch/ivm1.csv';
       const response = await fetch(url);
@@ -204,24 +204,24 @@
       table.forEach(row => {
         const column = row.split(',');
         const jahr = column[0];
-        const unterbrechungen = column[1];
+        const ueberlaufmenge = column[1];
         labels.push(jahr);
-        unterbrechungendata.push(unterbrechungen);
+        ueberlaufmengedata.push(ueberlaufmenge);
       });
-      // setting the name of the datacolumn "Gesamtdauer Unterbrechungen" by using slice() to exclude everything but the name
-      const unterbrechungenname = unterbrechungendata.slice(0,1);
+      // setting the name of the datacolumn "Gesamtdauer Ueberlaufmenge" by using slice() to exclude everything but the name
+      const ueberlaufmengename = ueberlaufmengedata.slice(0,1);
 
-      //remove 'jahr' in labels shown on x-axis via shift(), and 'unterbrechungen' in unterbrechungendata shown in chart
+      //remove 'jahr' in labels shown on x-axis via shift(), and 'ueberlaufmenge' in ueberlaufmengedata shown in chart
       labels.shift();
-      unterbrechungendata.shift();
+      ueberlaufmengedata.shift();
 
-    
+
 
       console.log(labels);
-      console.log(unterbrechungendata);
-      console.log(unterbrechungenname);
-      	
-      return { labels, unterbrechungendata, unterbrechungenname }
+      console.log(ueberlaufmengedata);
+      console.log(ueberlaufmengename);
+
+      return { labels, ueberlaufmengedata, ueberlaufmengename }
     }
   </script>
 
