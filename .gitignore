@@ -48,3 +48,5 @@ Thumbs.db
 *.mov
 *.wmv
 
+# dirs:
+consolechartjs_ikh3 - consolelog/
