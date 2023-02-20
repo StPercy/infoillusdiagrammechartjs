@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>I-VM-1: Unterbrechungen des ÖPNV (U-Bahn)</title>
+  <title>I-GS-3: Temperatur der Badegewässer</title>
   <!-- CSS -->
   <style>
     * {
@@ -110,33 +110,58 @@
         labels: datapoints.labels,
 
         datasets: [{
-          label: /*datapoints.unterbrechungenname*/'Gesamtdauer der witterungsbedingten Unterbrechungen des U-Bahnverkehrs mit Schienenersatzverkehr',
+          label: /*datapoints.unterbrechungenname*/'Temperaturmittel in der Badesaison (10 offizielle Badegewässer) ⇗',
 
-          type: 'bar',
+          type: 'line',
           data: datapoints.unterbrechungendata,
           backgroundColor: ['#e10019'],
           borderColor: ['#e10019'],
-          tension: 0.4
+          borderDash: [0, 7],
+          borderCapStyle: 'round',
+          pointStyle: 'rect',
+          pointRadius: 4,
         }]
       };
 
       // config
       const config = {
-        type: 'bar',
+        type: 'line',
         data,
         options: {
           scales: {
+            x: {
+              grid: {
+                display: true,
+                drawBorder: true,
+              },
+              ticks: {
+                display: true
+              }
+            },
             y: {
               beginAtZero: true,
-              max: 5000,
+              min: -2.0,
+              max: 3.0,
               title: {
                 display: true,
-                text: 'Gesamtdauer Unterbrechungen (Minuten)',
+                text: 'Mittel der Temperaturmessungen - Abweichungen (°C, Index: 2004=0)',
                 color: 'black',
                 align: 'start',
                 font: {
                 size: 10
-              }
+              },
+              },
+              grid: {
+                display: true,
+                drawBorder: true,
+                color: (context) => {
+                  console.table(context)
+                  if(context.tick.value === 0) {
+                    return 'black'
+                  } else {
+                    return 'lightgray'
+                  }
+                }
               }
             }
           },
@@ -153,13 +178,16 @@
               font: {
                 size: 12
               }
+            },
+            tooltip: {
+            usePointStyle: true,
             }
             },
             title: {
               display:true,
               position: 'top',
               align: 'center',
-              text: 'I-VM-1: Unterbrechungen des ÖPNV (U-Bahn)',
+              text: 'I-GS-3: Temperatur der Badegewässer ',
               color: 'black',
               font: {
                 size: 14
@@ -169,7 +197,7 @@
               display:true,
               position: 'bottom',
               align: 'end',
-              text: 'Datenquelle: Hamburger Hochbahn AG (Einsatzfälle Ersatzverkehr)',
+              text: 'Datenquelle: BUKEA HU (Badegewässerüberwachung)',
               color: 'black',
               font: {
                 size: 12
@@ -193,7 +221,7 @@
     async function getData(){
       const labels = [];
       const unterbrechungendata = [];
-      const url = './ivm1.csv';
+      const url = './igs3.csv';
       //const url = 'http://127.0.0.1:5500/chartjs3_csvfetch/ivm1.csv';
       const response = await fetch(url);
       const tabledata = await response.text();
@@ -211,8 +239,8 @@
       const unterbrechungenname = unterbrechungendata.slice(0,1);
 
       //remove 'jahr' in labels shown on x-axis via shift(), and 'unterbrechungen' in unterbrechungendata shown in chart
-      labels.shift();
-      unterbrechungendata.shift();
+      //labels.shift();
+      //unterbrechungendata.shift();
 
       return { labels, unterbrechungendata, unterbrechungenname }
     }
