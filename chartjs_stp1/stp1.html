@@ -110,16 +110,16 @@
         labels: datapoints.labels,
 
         datasets: [{
-          label: /*datapoints.unterbrechungenname*/'Temperaturmittel in der Badesaison (10 offizielle Badegewässer) ⇗',
+          label: /*datapoints.unterbrechungenname*/'Frühling ⇗',
 
           type: 'line',
           data: datapoints.unterbrechungendata,
-          backgroundColor: ['#e10019'],
-          borderColor: ['#e10019'],
-          borderDash: [0, 7],
-          borderCapStyle: 'round',
-          pointStyle: 'rect',
-          pointRadius: 4,
+          backgroundColor: ['#6aa14f'],
+          borderColor: ['#6aa14f'],
+          //borderDash: [0, 7],
+          //borderCapStyle: 'round',
+          //pointStyle: '',
+          pointRadius: 1,
         }]
       };
 
@@ -130,21 +130,14 @@
         options: {
           scales: {
             x: {
-              grid: {
-                display: true,
-                drawBorder: true,
-              },
-              ticks: {
-                display: true
-              }
             },
             y: {
               beginAtZero: true,
-              min: -2.0,
-              max: 3.0,
+              min: -6.0,
+              max: 20.0,
               title: {
                 display: true,
-                text: 'Mittel der Temperaturmessungen - Abweichungen (°C, Index: 2004=0)',
+                text: 'Jahreszeitliche Mitteltemperatur (°C)',
                 color: 'black',
                 align: 'start',
                 font: {
@@ -154,7 +147,7 @@
               grid: {
                 display: true,
                 drawBorder: true,
-                color: (context) => {
+                color: (context) => { //TODO Remove console.tabel
                   console.table(context)
                   if(context.tick.value === 0) {
                     return 'black'
@@ -187,7 +180,7 @@
               display:true,
               position: 'top',
               align: 'center',
-              text: 'I-GS-3: Temperatur der Badegewässer ',
+              text: 'S-TP-1: Jahreszeitliche Temperatur',
               color: 'black',
               font: {
                 size: 14
@@ -197,7 +190,7 @@
               display:true,
               position: 'bottom',
               align: 'end',
-              text: 'Datenquelle: BUKEA HU (Badegewässerüberwachung)',
+              text: 'Datenquelle: DWD (Temperaturmessungen)',
               color: 'black',
               font: {
                 size: 12
@@ -221,7 +214,7 @@
     async function getData(){
       const labels = [];
       const unterbrechungendata = [];
-      const url = './igs3.csv';
+      const url = './stp1.csv';
       //const url = 'http://127.0.0.1:5500/chartjs3_csvfetch/ivm1.csv';
       const response = await fetch(url);
       const tabledata = await response.text();
