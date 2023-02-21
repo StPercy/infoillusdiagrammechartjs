@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>I-GS-3: Temperatur der Badegewässer</title>
+  <title>S-TP-1: Jahreszeitliche Temperatur</title>
   <!-- CSS -->
   <style>
     * {
@@ -110,10 +110,10 @@
         labels: datapoints.labels,
 
         datasets: [{
-          label: /*datapoints.temperaturmittelname*/'Temperaturmittel in der Badesaison (10 offizielle Badegewässer) ⇗',
+          label: /*datapoints.unterbrechungenname*/'Temperaturmittel in der Badesaison (10 offizielle Badegewässer) ⇗',
 
           type: 'line',
-          data: datapoints.temperaturmitteldata,
+          data: datapoints.unterbrechungendata,
           backgroundColor: ['#e10019'],
           borderColor: ['#e10019'],
           borderDash: [0, 7],
@@ -154,7 +154,7 @@
               grid: {
                 display: true,
                 drawBorder: true,
-                color: (context) => { //TODO Remove console.tabel
+                color: (context) => {
                   console.table(context)
                   if(context.tick.value === 0) {
                     return 'black'
@@ -220,7 +220,7 @@
     // 2. step fetch the data asynchronously:
     async function getData(){
       const labels = [];
-      const temperaturmitteldata = [];
+      const unterbrechungendata = [];
       const url = './igs3.csv';
       //const url = 'http://127.0.0.1:5500/chartjs3_csvfetch/ivm1.csv';
       const response = await fetch(url);
@@ -231,18 +231,18 @@
       table.forEach(row => {
         const column = row.split(',');
         const jahr = column[0];
-        const temperaturmittel = column[1];
+        const unterbrechungen = column[1];
         labels.push(jahr);
-        temperaturmitteldata.push(temperaturmittel);
+        unterbrechungendata.push(unterbrechungen);
       });
-      // setting the name of the datacolumn "temperaturmittel" by using slice() to exclude everything but the name
-      const temperaturmittelname = temperaturmitteldata.slice(0,1);
+      // setting the name of the datacolumn "Gesamtdauer Unterbrechungen" by using slice() to exclude everything but the name
+      const unterbrechungenname = unterbrechungendata.slice(0,1);
 
-      //remove 'jahr' in labels shown on x-axis via shift(), and 'temperaturmittel' in temperaturmitteldata shown in chart
+      //remove 'jahr' in labels shown on x-axis via shift(), and 'unterbrechungen' in unterbrechungendata shown in chart
       //labels.shift();
-      //temperaturmitteldata.shift();
+      //unterbrechungendata.shift();
 
-      return { labels, temperaturmitteldata, temperaturmittelname }
+      return { labels, unterbrechungendata, unterbrechungenname }
     }
   </script>
 
