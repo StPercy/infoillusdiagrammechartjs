@@ -193,11 +193,17 @@
         type: 'line',
         data,
         options: {
+          skipNull: true,
           scales: {
             x: {
+              min: '1881',
+              max: '2021',
             },
             y: {
               beginAtZero: true,
+              ticks: {
+                stepSize: 2
+              },
               min: -6.0,
               max: 20.0,
               title: {
@@ -212,8 +218,8 @@
               grid: {
                 display: true,
                 drawBorder: true,
-                color: (context) => { //TODO Remove console.tabel
-                  console.table(context)
+                //black x-axis y-0-line:
+                color: (context) => {
                   if(context.tick.value === 0) {
                     return 'black'
                   } else {
@@ -225,7 +231,6 @@
           },
 
           plugins: {
-
             legend: {
             display: true,
             position: 'bottom',
@@ -286,8 +291,9 @@
       const g11jmsommerdata = [];
       const g11jmherbstdata = [];
       const g11jmwinterdata = [];
+
       const url = './stp1.csv';
-      //const url = 'http://127.0.0.1:5500/chartjs3_csvfetch/ivm1.csv';
+
       const response = await fetch(url);
       const tabledata = await response.text();
 
