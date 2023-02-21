@@ -110,17 +110,82 @@
         labels: datapoints.labels,
 
         datasets: [{
-          label: /*datapoints.unterbrechungenname*/'Frühling ⇗',
-
+          label: /*datapoints.fruehlingname*/'Frühling ⇗',
           type: 'line',
-          data: datapoints.unterbrechungendata,
+          data: datapoints.fruehlingdata,
           backgroundColor: ['#6aa14f'],
           borderColor: ['#6aa14f'],
-          //borderDash: [0, 7],
-          //borderCapStyle: 'round',
-          //pointStyle: '',
           pointRadius: 1,
-        }]
+        },
+          {
+          label: /*datapoints.sommername*/'Sommer ⇗',
+          type: 'line',
+          data: datapoints.sommerdata,
+          backgroundColor: ['#e10019'],
+          borderColor: ['#e10019'],
+          pointRadius: 1,
+        },
+        {
+          label: /*datapoints.herbstname*/'Herbst ⇗',
+          type: 'line',
+          data: datapoints.herbstdata,
+          backgroundColor: ['#f79646'],
+          borderColor: ['#f79646'],
+          pointRadius: 1,
+        },
+        {
+          label: /*datapoints.herbstname*/'Winter ⇗',
+          type: 'line',
+          data: datapoints.winterdata,
+          backgroundColor: ['#003063'],
+          borderColor: ['#003063'],
+          pointRadius: 1,
+        },
+        {
+          label: /*datapoints.g11jmfruehlingname*/'Gleitendes-11-Jahres-Mittel-Frühling ⇗',
+          type: 'line',
+          data: datapoints.g11jmfruehlingdata,
+          backgroundColor: ['#6aa14f'],
+          borderColor: ['#6aa14f'],
+          borderDash: [0, 7],
+          borderCapStyle: 'round',
+          pointStyle: 'rect',
+          pointRadius: 1,
+        },
+        {
+          label: /*datapoints.g11jmsommername*/'Gleitendes-11-Jahres-Mittel-Sommer ⇗',
+          type: 'line',
+          data: datapoints.g11jmsommerdata,
+          backgroundColor: ['#e10019'],
+          borderColor: ['#e10019'],
+          borderDash: [0, 7],
+          borderCapStyle: 'round',
+          pointStyle: 'rect',
+          pointRadius: 1,
+        },
+        {
+          label: /*datapoints.g11jmherbstname*/'Gleitendes-11-Jahres-Mittel-Herbst ⇗',
+          type: 'line',
+          data: datapoints.g11jmherbstdata,
+          backgroundColor: ['#f79646'],
+          borderColor: ['#f79646'],
+          borderDash: [0, 7],
+          borderCapStyle: 'round',
+          pointStyle: 'rect',
+          pointRadius: 1,
+        },
+        {
+          label: /*datapoints.g11jmwintername*/'Gleitendes-11-Jahres-Mittel-Winter ⇗',
+          type: 'line',
+          data: datapoints.g11jmwinterdata,
+          backgroundColor: ['#003063'],
+          borderColor: ['#003063'],
+          borderDash: [0, 7],
+          borderCapStyle: 'round',
+          pointStyle: 'rect',
+          pointRadius: 1,
+        },
+        ]
       };
 
       // config
@@ -213,7 +278,14 @@
     // 2. step fetch the data asynchronously:
     async function getData(){
       const labels = [];
-      const unterbrechungendata = [];
+      const fruehlingdata = [];
+      const sommerdata = [];
+      const herbstdata = [];
+      const winterdata = [];
+      const g11jmfruehlingdata = [];
+      const g11jmsommerdata = [];
+      const g11jmherbstdata = [];
+      const g11jmwinterdata = [];
       const url = './stp1.csv';
       //const url = 'http://127.0.0.1:5500/chartjs3_csvfetch/ivm1.csv';
       const response = await fetch(url);
@@ -224,18 +296,46 @@
       table.forEach(row => {
         const column = row.split(',');
         const jahr = column[0];
-        const unterbrechungen = column[1];
+        const fruehling = column[1];
+        const sommer = column[2];
+        const herbst = column[3];
+        const winter = column[4];
+        const g11jmfruehling = column[5];
+        const g11jmsommer = column[6];
+        const g11jmherbst = column[7];
+        const g11jmwinter = column[8];
+
         labels.push(jahr);
-        unterbrechungendata.push(unterbrechungen);
+        fruehlingdata.push(fruehling);
+        sommerdata.push(sommer);
+        herbstdata.push(herbst);
+        winterdata.push(winter);
+        g11jmfruehlingdata.push(g11jmfruehling);
+        g11jmsommerdata.push(g11jmsommer);
+        g11jmherbstdata.push(g11jmherbst);
+        g11jmwinterdata.push(g11jmwinter);
       });
-      // setting the name of the datacolumn "Gesamtdauer Unterbrechungen" by using slice() to exclude everything but the name
-      const unterbrechungenname = unterbrechungendata.slice(0,1);
+      // setting the name of the datacolumn "fruehling" by using slice() to exclude everything but the name
+      const fruehlingname = fruehlingdata.slice(0,1);
+      const sommername = sommerdata.slice(0,1);
+      const herbstname = herbstdata.slice(0,1);
+      const wintername = winterdata.slice(0,1);
+      const g11jmfruehlingname = g11jmfruehlingdata.slice(0,1);
+      const g11jmsommername = g11jmsommerdata.slice(0,1);
+      const g11jmherbstname = g11jmherbstdata.slice(0,1);
+      const g11jmwintername = g11jmwinterdata.slice(0,1);
 
-      //remove 'jahr' in labels shown on x-axis via shift(), and 'unterbrechungen' in unterbrechungendata shown in chart
-      //labels.shift();
-      //unterbrechungendata.shift();
-
-      return { labels, unterbrechungendata, unterbrechungenname }
+      return {
+          	    labels,
+                fruehlingdata, fruehlingname,
+                sommerdata, sommername,
+                herbstdata, herbstname,
+                winterdata, wintername,
+                g11jmfruehlingdata, g11jmfruehlingname,
+                g11jmsommerdata, g11jmsommername,
+                g11jmherbstdata, g11jmherbstname,
+                g11jmwinterdata, g11jmwintername,
+              }
     }
   </script>
 
