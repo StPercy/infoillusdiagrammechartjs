@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>S-TP-1: Jahresmitteltemperatur</title>
+  <title>S-TP-3: Heiße Tage und Eistage </title>
   <!-- CSS -->
   <style>
     * {
@@ -96,71 +96,69 @@
         labels: datapoints.labels,
 
         datasets: [{
-          label: /*datapoints.jahresmittelname*/'Jahresmittel ⇗',
-          type: 'line',
-          data: datapoints.jahresmitteldata,
+          label: /*datapoints.heissetagename*/'Heiße Tage ⇗',
+          type: 'bar',
+          data: datapoints.heissetagedata,
           backgroundColor: ['#e10019'],
           borderColor: ['#e10019'],
-          pointRadius: 1,
-
         },
-        {
-          label: /*datapoints.m6190name*/'Mittel 1961-1990',
-          type: 'line',
-          data: datapoints.m6190data,
-          backgroundColor: [' #003063'],
-          borderColor: [' #003063'],
-          borderDash: [1, 300],
-          borderCapStyle: 'round',
-          pointStyle: 'round',
-          pointRadius: 1,
-          usePointStyle: true,
-        },
-        {
-          label: /*datapoints.m9120name*/'Mittel 1991-2020',
-          type: 'line',
-          data: datapoints.m9120data,
-          backgroundColor: ['#8c8c8c'],
-          borderColor: ['#8c8c8c'],
-          borderDash: [0.5,400],
-          borderCapStyle: 'round',
-          pointStyle: 'round',
-          pointRadius: 1,
-          usePointStyle: true,
+          {
+          label: /*datapoints.eistagename*/'Eistage ',
+          type: 'bar',
+          data: datapoints.eistagedata,
+          backgroundColor: ['#003063'],
+          borderColor: ['#003063'],
         },
         ]
       };
 
       // config
       const config = {
-        type: 'line',
+        type: 'bar',
         data,
         options: {
           skipNull: true,
           scales: {
             x: {
-              min: '1881',
-              max: '2021',
-            },
-            y: {
+              min: '1951',
+              max: '2020',
+              stacked: true,
               beginAtZero: true,
+              ticks: {
+                stepSize: 2
+              },
               ticks: {
                 stepSize: 1
               },
-              min: 6.0,
-              max: 12.0,
+            },
+            y: {
+              stacked: true,
+              beginAtZero: true,
+              ticks: {
+                stepSize: 2
+              },
+              min: -60.0,
+              max: 24.0,
               title: {
                 display: true,
-                text: 'Jahresmitteltemperatur (°C)',
+                text: 'Heiße Tage und Eistage (Anzahl)',
                 color: 'black',
                 align: 'start',
                 font: {
-                size: 15
+                size: 10
               },
               },
               grid: {
                 display: true,
                 drawBorder: true,
+                //black x-axis y-0-line:
+                color: (context) => {
+                  if(context.tick.value === 0) {
+                    return 'black'
+                  } else {
+                    return 'lightgray'
+                  }
+                }
               }
             }
           },
@@ -185,7 +183,7 @@
               display:true,
               position: 'top',
               align: 'center',
-              text: 'S-TP-1: Jahresmitteltemperatur',
+              text: 'S-TP-3: Heiße Tage und Eistage',
               color: 'black',
               font: {
                 size: 14
@@ -218,12 +216,10 @@
     // 2. step fetch the data asynchronously:
     async function getData(){
       const labels = [];
-      const jahresmitteldata = [];
-      const m6190data = [];
-      const m9120data = [];
+      const heissetagedata = [];
+      const eistagedata = [];
 
-
-      const url = './stp1.csv';
+      const url = './stp3.csv';
 
       const response = await fetch(url);
       const tabledata = await response.text();
@@ -233,27 +229,21 @@
       table.forEach(row => {
         const column = row.split(',');
         const jahr = column[0];
-        const jahresmittel = column[1];
-        const m6190 = column[2];
-        const m9120 = column[3];
-
+        const heissetage = column[1];
+        const eistage = column[2];
 
         labels.push(jahr);
-        jahresmitteldata.push(jahresmittel);
-        m6190data.push(m6190);
-        m9120data.push(m9120);
-
+        heissetagedata.push(heissetage);
+        eistagedata.push(eistage);
       });
-      // setting the name of the datacolumn "jahresmittel" by using slice() to exclude everything but the name
-      const jahresmittelname = jahresmitteldata.slice(0,1);
-      const m6190name = m6190data.slice(0,1);
-      const m9120name = m9120data.slice(0,1);
+      // setting the name of the datacolumn "heissetage" by using slice() to exclude everything but the name
+      const heissetagename = heissetagedata.slice(0,1);
+      const eistagename = eistagedata.slice(0,1);
 
       return {
           	    labels,
-                jahresmitteldata, jahresmittelname,
-                m6190data, m6190name,
-                m9120data, m9120name,
+                heissetagedata, heissetagename,
+                eistagedata, eistagename,
               }
     }
   </script>
