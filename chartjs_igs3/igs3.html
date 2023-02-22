@@ -12,21 +12,6 @@
   font-family: sans-serif;
   color:black;
 }
-/*
-.chartMenu {
-  width: 100vw;
-  height: 40px;
-  background: #1A1A1A;
-  color: rgba(54, 162, 235, 1);
-}
-
-
-.chartMenu p {
-  padding: 10px;
-  font-size: 20px;
-}
-  */
-
 .chartCard {
   width: 100vw;
   height: calc(100vh - 40px);
@@ -40,8 +25,7 @@
   width: 800px;
   height: 400px;
   padding: 20px;
-  /*border-radius: 20px;*/
-   border: solid 1px rgba(0, 48, 99, 1);
+  border: solid 1px rgba(0, 48, 99, 1);
   background: white;
 }
 @media only screen and (max-width: 800px) {
@@ -154,8 +138,7 @@
               grid: {
                 display: true,
                 drawBorder: true,
-                color: (context) => { //TODO Remove console.tabel
-                  console.table(context)
+                color: (context) => {
                   if(context.tick.value === 0) {
                     return 'black'
                   } else {
@@ -222,7 +205,6 @@
       const labels = [];
       const temperaturmitteldata = [];
       const url = './igs3.csv';
-      //const url = 'http://127.0.0.1:5500/chartjs3_csvfetch/ivm1.csv';
       const response = await fetch(url);
       const tabledata = await response.text();
 
@@ -237,10 +219,6 @@
       });
       // setting the name of the datacolumn "temperaturmittel" by using slice() to exclude everything but the name
       const temperaturmittelname = temperaturmitteldata.slice(0,1);
-
-      //remove 'jahr' in labels shown on x-axis via shift(), and 'temperaturmittel' in temperaturmitteldata shown in chart
-      //labels.shift();
-      //temperaturmitteldata.shift();
 
       return { labels, temperaturmitteldata, temperaturmittelname }
     }

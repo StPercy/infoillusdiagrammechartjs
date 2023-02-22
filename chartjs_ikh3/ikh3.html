@@ -12,20 +12,6 @@
   font-family: sans-serif;
   color:black;
 }
-/*
-.chartMenu {
-  width: 100vw;
-  height: 40px;
-  background: #1A1A1A;
-  color: rgba(54, 162, 235, 1);
-}
-
-
-.chartMenu p {
-  padding: 10px;
-  font-size: 20px;
-}
-  */
 
 .chartCard {
   width: 100vw;
@@ -40,8 +26,7 @@
   width: 800px;
   height: 500px;
   padding: 20px;
-  /*border-radius: 20px;*/
-   border: solid 1px rgba(0, 48, 99, 1);
+  border: solid 1px rgba(0, 48, 99, 1);
   background: white;
 }
 @media only screen and (max-width: 800px) {
@@ -204,7 +189,6 @@
       const anzahldata1 = [];
       const anzahldata2 = [];
       const url = './ikh3.csv';
-      //const url = 'http://127.0.0.1:5500/chartjs3_csvfetch/ivm1.csv';
       const response = await fetch(url);
       const tabledata = await response.text();
 
@@ -222,12 +206,6 @@
       // setting the name of the datacolumn "Gesamtdauer anzahl" by using slice() to exclude everything but the name
       const anzahlname1 = anzahldata1.slice(0,1);
       const anzahlname2 = anzahldata2.slice(0,1);
-
-      //TODO:Remove this Comment. 4 Info: In this case: WE DO NOT remove(shift();) 'jahr' in labels shown on x-axis via shift(), and 'anzahl' in anzahldata shown in chart,
-      //therefore I commented the shift() method OUT.
-      //labels.shift();
-      //anzahldata1.shift();
-      //anzahldata2.shift();
 
       return { labels, anzahldata1, anzahldata2, anzahlname1, anzahlname2 }
     }

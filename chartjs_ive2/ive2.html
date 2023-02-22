@@ -12,20 +12,6 @@
   font-family: sans-serif;
   color:black;
 }
-/*
-.chartMenu {
-  width: 100vw;
-  height: 40px;
-  background: #1A1A1A;
-  color: rgba(54, 162, 235, 1);
-}
-
-
-.chartMenu p {
-  padding: 10px;
-  font-size: 20px;
-}
-  */
 
 .chartCard {
   width: 100vw;
@@ -40,8 +26,7 @@
   width: 800px;
   height: 400px;
   padding: 20px;
-  /*border-radius: 20px;*/
-   border: solid 1px rgba(0, 48, 99, 1);
+  border: solid 1px rgba(0, 48, 99, 1);
   background: white;
 }
 @media only screen and (max-width: 800px) {
@@ -110,9 +95,9 @@
         labels: datapoints.labels,
 
         datasets: [{
-          label: /*datapoints.unterbrechungenname*/'Überschreitung von 400.000 m³/d ⇗',
+          label: /*datapoints.ueberschreitungenname*/'Überschreitung von 400.000 m³/d ⇗',
           type: 'bar',
-          data: datapoints.unterbrechungendata,
+          data: datapoints.ueberschreitungendata,
           backgroundColor: ['#e10019'],
           borderColor: ['#e10019'],
           tension: 0.4
@@ -192,9 +177,8 @@
     // 2. step fetch the data asynchronously:
     async function getData(){
       const labels = [];
-      const unterbrechungendata = [];
+      const ueberschreitungendata = [];
       const url = './ive2.csv';
-      //const url = 'http://127.0.0.1:5500/chartjs3_csvfetch/ivm1.csv';
       const response = await fetch(url);
       const tabledata = await response.text();
 
@@ -203,18 +187,19 @@
       table.forEach(row => {
         const column = row.split(',');
         const jahr = column[0];
-        const unterbrechungen = column[1];
+        const ueberschreitungen = column[1];
         labels.push(jahr);
-        unterbrechungendata.push(unterbrechungen);
+        ueberschreitungendata.push(ueberschreitungen);
       });
-      // setting the name of the datacolumn "Gesamtdauer Unterbrechungen" by using slice() to exclude everything but the name
-      const unterbrechungenname = unterbrechungendata.slice(0,1);
+      // setting the name of the datacolumn "Ueberschreitungen (Tage im Jahr)" by using slice() to exclude everything but the name
+      const ueberschreitungenname = ueberschreitungendata.slice(0,1);
 
-      //remove 'jahr' in labels shown on x-axis via shift(), and 'unterbrechungen' in unterbrechungendata shown in chart
+      //remove 'jahr' in labels shown on x-axis via shift(), and 'ueberschreitungen' in ueberschreitungendata shown in chart
+      //We need shift() 'cause we have 2 headlines in the csv file 😉'
       labels.shift();
-      unterbrechungendata.shift();
+      ueberschreitungendata.shift();
 
-      return { labels, unterbrechungendata, unterbrechungenname }
+      return { labels, ueberschreitungendata, ueberschreitungenname }
     }
   </script>
 
