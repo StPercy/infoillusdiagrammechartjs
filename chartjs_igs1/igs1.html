@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>S-SO-8: Sonnenscheindauer </title>
+  <!-- CSS -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      color: black;
+    }
+
+    .chartCard {
+      width: 100vw;
+      height: calc(100vh - 40px);
+      background: 'white';
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chartBox {
+      width: 800px;
+      height: 400px;
+      padding: 20px;
+      /*border-radius: 20px;*/
+      border: solid 1px rgba(0, 48, 99, 1);
+      background: white;
+    }
+
+    @media only screen and (max-width: 800px) {
+      .chartBox {
+        width: 90%;
+        height: 45%;
+        margin: 10px;
+        padding: 20px;
+      }
+    }
+
+    @media only screen and (max-width: 500px) {
+      .chartBox {
+        width: 90%;
+        height: 45%;
+        margin: 10px;
+        padding: 20px;
+      }
+    }
+
+    @media only screen and (max-width: 450px) {
+      .chartBox {
+        width: 90%;
+        height: 45%;
+        margin: 10px;
+        padding: 20px;
+      }
+    }
+
+    @media only screen and (max-width: 380px) {
+      .chartBox {
+        width: 90%;
+        height: 45%;
+        margin: 0;
+        padding: 20px;
+      }
+    }
+
+    @media only screen and (max-width: 281px) {
+      .chartBox {
+        width: 90%;
+        height: 45%;
+        margin: 10px;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<!-- HTML -->
+
+<body>
+  <div class="chartCard">
+    <div class="chartBox style=" position: relative;>
+      <canvas id="myChart"></canvas>
+      <!-- <button onclick="getData()">get Data in Console</button> -->
+    </div>
+  </div>
+
+  <!-- JS Scripts -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // 1. step use this function from below
+    drawChart();
+
+    // setup and 1.1 step implementing async function drawChart()
+    async function drawChart() {
+      const datapoints = await getData();
+      const data = {
+        //labels on x-axis:
+        labels: datapoints.labels,
+
+        datasets: [
+          {
+            label: /*datapoints.g11jmname*/'Heiße Tage (Gebietsmittel für Hamburg)',
+            type: 'line',
+            data: datapoints.g11jmdata,
+            backgroundColor: ['#003063'],
+            borderColor: ['#003063'],
+            borderDash: [5, 5],
+            borderCapStyle: 'round',
+            pointStyle: 'rectRot',
+            pointRadius: 4,
+            usePointStyle: true,
+            showLine: false
+          },
+          {
+            label: /*datapoints.jahressummename*/'Warmtage im Warnkreis Hamburg ⇘',
+            type: 'bar',
+            data: datapoints.jahressummedata,
+            backgroundColor: ['#e10019'],
+            borderColor: ['#e10019'],
+            width: 25,
+            barPercentage: 0.5,
+            pointstyle: 'rect'
+          },
+
+        ]
+      };
+
+      // config
+      const config = {
+        type: 'bar',
+        data,
+        options: {
+          scales: {
+
+            x: {
+              min: '2005',
+              max: '2021',
+              beginAtZero: true,
+              ticks: {
+                stepSize: 2
+              },
+            },
+
+            y: {
+              beginAtZero: true,
+              ticks: {
+                stepSize: 2
+              },
+              min: 0,
+              max: 20,
+              title: {
+                display: true,
+                text: 'Tage mit Hitzewarnungen (Anzahl)',
+                color: 'black',
+                align: 'start',
+                font: {
+                  size: 15
+                },
+              },
+              grid: {
+                display: true,
+                drawBorder: true,
+              }
+            }
+          },
+
+          plugins: {
+            legend: {
+              display: true,
+              position: 'bottom',
+               //beacuse we configured our legend pointStyle below, we have to insert a onClick function 😉
+               onClick: (click, legendItem, legend) => {
+                  console.log(legend.legendItems);
+                  const datasets = legend.legendItems.map((dataset, index) => {
+                    return dataset.text
+                  });
+
+                  const index = datasets.indexOf(legendItem.text);
+                  if(legend.chart.isDatasetVisible(index) === true) {
+                    legend.chart.hide(index)
+                  } else {
+                    legend.chart.show(index)
+                  };
+                },
+              labels: {
+                // adjusting legend Style to type and pointStyle of dataset:
+                usePointStyle: true,
+                generateLabels: (chart) => {
+                  let visibility = [];
+                  for(let i = 0; i < chart.data.datasets.length; i++) {
+                    if(chart.isDatasetVisible(i) === true ) {
+                      visibility.push(false)
+                    } else {
+                      visibility.push(true)
+                    }
+                  };
+
+                  let pointStyle = [];
+                  chart.data.datasets.forEach(dataset => {
+                    if(dataset.type === 'line') {
+                      pointStyle.push('rectRot')
+                    } else {
+                      pointStyle.push('rect')
+                    }
+                  });
+
+                  return chart.data.datasets.map(
+                    (dataset, index) => ({
+                      text: dataset.label,
+                      fillStyle: dataset.backgroundColor,
+                      strokeStyle: dataset.borderColor,
+                      pointStyle: pointStyle[index],
+                      hidden: visibility[index]
+                    })
+                  )
+                },
+                color: 'black',
+
+                //pointStyle: 'rect',
+                font: {
+                  size: 12
+                }
+              },
+              tooltip: {
+                usePointStyle: true,
+              }
+            },
+            title: {
+              display: true,
+              position: 'top',
+              align: 'center',
+              text: 'I-GS-1: Hitzewarnungen',
+              color: 'black',
+              font: {
+                size: 15
+              }
+            },
+            subtitle: {
+              display: true,
+              position: 'bottom',
+              align: 'end',
+              text: 'Datenquelle: DWD (Hitzewarnungen)',
+              color: 'black',
+              font: {
+                size: 12
+              }
+            }
+          },
+
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      };
+
+      // render init block
+      const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+      );
+    };
+
+    // 2. step fetch the data asynchronously:
+    async function getData() {
+      const labels = [];
+      const jahressummedata = [];
+      const g11jmdata = [];
+
+      const url = './igs1.csv';
+
+      const response = await fetch(url);
+      const tabledata = await response.text();
+
+
+      const table = tabledata.split('\n').slice(1);;
+      table.forEach(row => {
+        const column = row.split(',');
+        const jahr = column[0];
+        const jahressumme = column[1];
+        const g11jm = column[2];
+
+        labels.push(jahr);
+        jahressummedata.push(jahressumme);
+        g11jmdata.push(g11jm);
+      });
+      // setting the name of the datacolumn "jahressumme" by using slice() to exclude everything but the name
+      const jahressummename = jahressummedata.slice(0, 1);
+      const g11jmname = g11jmdata.slice(0, 1);
+
+      return {
+        labels,
+        jahressummedata, jahressummename,
+        g11jmdata, g11jmname,
+      }
+    }
+  </script>
+
+</body>
+
+</html>
