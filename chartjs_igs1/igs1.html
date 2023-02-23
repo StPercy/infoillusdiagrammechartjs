@@ -104,9 +104,9 @@
 
         datasets: [
           {
-            label: /*datapoints.g11jmname*/'Heiße Tage (Gebietsmittel für Hamburg)',
+            label: /*datapoints.heissetagename*/'Heiße Tage (Gebietsmittel für Hamburg)',
             type: 'line',
-            data: datapoints.g11jmdata,
+            data: datapoints.heissetagedata,
             backgroundColor: ['#003063'],
             borderColor: ['#003063'],
             borderDash: [5, 5],
@@ -117,9 +117,9 @@
             showLine: false
           },
           {
-            label: /*datapoints.jahressummename*/'Warmtage im Warnkreis Hamburg ⇘',
+            label: /*datapoints.warntagename*/'Warntage im Warnkreis Hamburg ⇘',
             type: 'bar',
-            data: datapoints.jahressummedata,
+            data: datapoints.warntagedata,
             backgroundColor: ['#e10019'],
             borderColor: ['#e10019'],
             width: 25,
@@ -173,7 +173,8 @@
             legend: {
               display: true,
               position: 'bottom',
-               //beacuse we configured our legend pointStyle below, we have to insert a onClick function 😉
+
+               //beacuse we configured our legend pointStyle below, we have to insert a onClick() function 😉
                onClick: (click, legendItem, legend) => {
                   console.log(legend.legendItems);
                   const datasets = legend.legendItems.map((dataset, index) => {
@@ -267,8 +268,8 @@
     // 2. step fetch the data asynchronously:
     async function getData() {
       const labels = [];
-      const jahressummedata = [];
-      const g11jmdata = [];
+      const warntagedata = [];
+      const heissetagedata = [];
 
       const url = './igs1.csv';
 
@@ -280,21 +281,21 @@
       table.forEach(row => {
         const column = row.split(',');
         const jahr = column[0];
-        const jahressumme = column[1];
-        const g11jm = column[2];
+        const warntage = column[1];
+        const heissetage = column[2];
 
         labels.push(jahr);
-        jahressummedata.push(jahressumme);
-        g11jmdata.push(g11jm);
+        warntagedata.push(warntage);
+        heissetagedata.push(heissetage);
       });
-      // setting the name of the datacolumn "jahressumme" by using slice() to exclude everything but the name
-      const jahressummename = jahressummedata.slice(0, 1);
-      const g11jmname = g11jmdata.slice(0, 1);
+      // setting the name of the datacolumn "warntage" by using slice() to exclude everything but the name
+      const warntagename = warntagedata.slice(0, 1);
+      const heissetagename = heissetagedata.slice(0, 1);
 
       return {
         labels,
-        jahressummedata, jahressummename,
-        g11jmdata, g11jmname,
+        warntagedata, warntagename,
+        heissetagedata, heissetagename,
       }
     }
   </script>
