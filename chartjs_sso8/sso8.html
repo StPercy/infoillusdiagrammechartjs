@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>S-TP-1: Jahresmitteltemperatur</title>
+  <title>S-SO-8: Sonnenscheindauer </title>
   <!-- CSS -->
   <style>
     * {
@@ -95,63 +95,56 @@
         //labels on x-axis:
         labels: datapoints.labels,
 
-        datasets: [{
-          label: /*datapoints.jahresmittelname*/'Jahresmittel ⇗',
+        datasets: [
+        {
+          label: /*datapoints.g11jmname*/'Gleitendes 11-Jahres-Mittel ⇗',
           type: 'line',
-          data: datapoints.jahresmitteldata,
+          data: datapoints.g11jmdata,
           backgroundColor: ['#e10019'],
           borderColor: ['#e10019'],
+          borderDash: [5, 5],
+          borderCapStyle: 'round',
+          pointStyle: 'round',
           pointRadius: 1,
+          usePointStyle: true,
+        },
+        {
+          label: /*datapoints.jahressummename*/'Jahressumme ⇗',
+          type: 'bar',
+          data: datapoints.jahressummedata,
+          backgroundColor: ['#ff6666'],
+          borderColor: ['#ff6666'],
+        },
 
-        },
-        {
-          label: /*datapoints.m6190name*/'Mittel 1961-1990',
-          type: 'line',
-          data: datapoints.m6190data,
-          backgroundColor: [' #003063'],
-          borderColor: [' #003063'],
-          borderDash: [1, 300],
-          borderCapStyle: 'round',
-          pointStyle: 'round',
-          pointRadius: 1,
-          usePointStyle: true,
-        },
-        {
-          label: /*datapoints.m9120name*/'Mittel 1991-2020',
-          type: 'line',
-          data: datapoints.m9120data,
-          backgroundColor: ['#8c8c8c'],
-          borderColor: ['#8c8c8c'],
-          borderDash: [0.5,400],
-          borderCapStyle: 'round',
-          pointStyle: 'round',
-          pointRadius: 1,
-          usePointStyle: true,
-        },
         ]
       };
 
       // config
       const config = {
-        type: 'line',
+        type: 'bar',
         data,
         options: {
-          skipNull: true,
           scales: {
+
             x: {
-              min: '1881',
+              min: '1951',
               max: '2021',
+              beginAtZero: true,
+              ticks: {
+                stepSize: 2
+              },
             },
+
             y: {
               beginAtZero: true,
               ticks: {
-                stepSize: 1
+                stepSize: 100
               },
-              min: 6.0,
-              max: 12.0,
+              min: 1000,
+              max: 2000,
               title: {
                 display: true,
-                text: 'Jahresmitteltemperatur (°C)',
+                text: 'Sonnenscheindauer (Stunden)',
                 color: 'black',
                 align: 'start',
                 font: {
@@ -185,7 +178,7 @@
               display:true,
               position: 'top',
               align: 'center',
-              text: 'S-TP-1: Jahresmitteltemperatur',
+              text: 'S-SO-8: Sonnenscheindauer',
               color: 'black',
               font: {
                 size: 14
@@ -195,7 +188,7 @@
               display:true,
               position: 'bottom',
               align: 'end',
-              text: 'Datenquelle: DWD (Temperaturmessungen)',
+              text: 'Datenquelle: DWD (Strahlungsmessungen)',
               color: 'black',
               font: {
                 size: 12
@@ -218,12 +211,10 @@
     // 2. step fetch the data asynchronously:
     async function getData(){
       const labels = [];
-      const jahresmitteldata = [];
-      const m6190data = [];
-      const m9120data = [];
+      const jahressummedata = [];
+      const g11jmdata = [];
 
-
-      const url = './stp1.csv';
+      const url = './sso8.csv';
 
       const response = await fetch(url);
       const tabledata = await response.text();
@@ -233,27 +224,21 @@
       table.forEach(row => {
         const column = row.split(',');
         const jahr = column[0];
-        const jahresmittel = column[1];
-        const m6190 = column[2];
-        const m9120 = column[3];
-
+        const jahressumme = column[1];
+        const g11jm = column[2];
 
         labels.push(jahr);
-        jahresmitteldata.push(jahresmittel);
-        m6190data.push(m6190);
-        m9120data.push(m9120);
-
+        jahressummedata.push(jahressumme);
+        g11jmdata.push(g11jm);
       });
-      // setting the name of the datacolumn "jahresmittel" by using slice() to exclude everything but the name
-      const jahresmittelname = jahresmitteldata.slice(0,1);
-      const m6190name = m6190data.slice(0,1);
-      const m9120name = m9120data.slice(0,1);
+      // setting the name of the datacolumn "jahressumme" by using slice() to exclude everything but the name
+      const jahressummename = jahressummedata.slice(0,1);
+      const g11jmname = g11jmdata.slice(0,1);
 
       return {
           	    labels,
-                jahresmitteldata, jahresmittelname,
-                m6190data, m6190name,
-                m9120data, m9120name,
+                jahressummedata, jahressummename,
+                g11jmdata, g11jmname,
               }
     }
   </script>
