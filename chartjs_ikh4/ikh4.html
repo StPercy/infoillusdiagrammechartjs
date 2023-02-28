@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>I-KH-4: Kettentiden</title>
+  <!-- CSS -->
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  color:black;
+}
+
+.chartCard {
+  width: 100vw;
+  height: calc(100vh - 40px);
+  background: 'white';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chartBox {
+  width: 800px;
+  height: 550px;
+  padding: 20px;
+  /*border-radius: 20px;*/
+   border: solid 1px rgba(0, 48, 99, 1);
+  background: white;
+}
+@media only screen and (max-width: 800px) {
+  .chartBox {
+    width: 90%;
+    height: 45%;
+    margin: 10px;
+    padding: 20px;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .chartBox {
+    width: 90%;
+    height: 45%;
+    margin: 10px;
+    padding: 20px;
+  }
+}
+@media only screen and (max-width: 450px) {
+  .chartBox {
+    width: 90%;
+    height: 45%;
+    margin: 10px;
+    padding: 20px;
+  }
+}
+@media only screen and (max-width: 380px) {
+  .chartBox {
+    width: 90%;
+    height: 45%;
+    margin: 0;
+    padding: 20px;
+  }
+}
+@media only screen and (max-width: 281px) {
+  .chartBox {
+    width: 90%;
+    height: 45%;
+    margin: 10px;
+    padding: 20px;
+  }
+}
+  </style>
+</head>
+
+<!-- HTML -->
+<body>
+<div class="chartCard">
+    <div class="chartBox style="position: relative;>
+      <canvas id="myChart"></canvas>
+      <!-- <button onclick="getData()">get Data in Console</button> -->
+    </div>
+  </div>
+
+<!-- JS Scripts -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // 1. step use this function from below
+    drawChart();
+
+    // setup and 1.1 step implementing async function drawChart()
+    async function drawChart() {
+      const datapoints = await getData();
+      const data = {
+        //labels on x-axis:
+        labels: datapoints.labels,
+
+        datasets: [{
+          label: /*datapoints.ue1tname*/'Überschreitungen 1er-Tiden',
+          type: 'bar',
+          data: datapoints.ue1tdata,
+          backgroundColor: ['#e3e3e3'],
+          borderColor: ['#e3e3e3'],
+        },
+          {
+          label: /*datapoints.ue2tname*/'Überschreitungen 2er-Tiden ',
+          type: 'bar',
+          data: datapoints.ue2tdata,
+          backgroundColor: ['#b3b3b3'],
+          borderColor: ['#b3b3b3'],
+        },
+        {
+          label: /*datapoints.ue3tname*/'Überschreitungen 3er-Tiden ',
+          type: 'bar',
+          data: datapoints.ue3tdata,
+          backgroundColor: ['#666'],
+          borderColor: ['#666'],
+        },
+        {
+          label: /*datapoints.ue4tname*/'Überschreitungen 4er-Tiden ',
+          type: 'bar',
+          data: datapoints.ue4tdata,
+          backgroundColor: ['#003063'],
+          borderColor: ['#003063'],
+        },
+        {
+          label: /*datapoints.ue4tname*/'Überschreitungen 5er-Tiden und länger',
+          type: 'bar',
+          data: datapoints.ue5tdata,
+          backgroundColor: ['#e10019'],
+          borderColor: ['#e10019'],
+        },
+        ]
+      };
+
+      // config
+      const config = {
+        type: 'bar',
+        data,
+        options: {
+          skipNull: true,
+          scales: {
+            x: {
+              min: '1960',
+              max: '2021',
+              stacked: true,
+              beginAtZero: true,
+              ticks: {
+                stepSize: 2
+              },
+              ticks: {
+                stepSize: 1
+              },
+            },
+            y: {
+              stacked: true,
+              beginAtZero: true,
+              ticks: {
+                stepSize: 5
+              },
+              min: 0.0,
+              max: 50,
+              title: {
+                display: true,
+                text: 'Überschreitungen Schließwasserstand Este-Sperrwerks (Pegel Blankenese) Kettentiden (Anzahl)',
+                color: 'black',
+                align: 'start',
+                font: {
+                size: 10
+              },
+              },
+              grid: {
+                display: true,
+                drawBorder: true,
+                //black x-axis y-0-line:
+                color: (context) => {
+                  if(context.tick.value === 0) {
+                    return 'black'
+                  } else {
+                    return 'lightgray'
+                  }
+                }
+              }
+            }
+          },
+
+          plugins: {
+            legend: {
+            display: true,
+            position: 'bottom',
+            labels: {
+              color: 'black',
+              usePointStyle: true,
+              pointStyle: 'rect',
+              font: {
+                size: 12
+              }
+            },
+            tooltip: {
+            usePointStyle: true,
+            }
+            },
+            title: {
+              display:true,
+              position: 'top',
+              align: 'center',
+              //text: 'I-KH-4: Wie viele Überschreitungen der Kettentiden gab es 1960 - 2021?',
+              text: 'I-KH-4: Kettentiden',
+              color: 'black',
+              font: {
+                size: 14
+              }
+            },
+            subtitle: {
+              display:true,
+              position: 'bottom',
+              align: 'end',
+              text: 'Datenquelle: HPA(Pegelmessungen)',
+              color: 'black',
+              font: {
+                size: 12
+              }
+            }
+          },
+
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      };
+
+      // render init block
+      const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+      );
+    };
+
+    // 2. step fetch the data asynchronously:
+    async function getData(){
+      const labels = [];
+      const ue1tdata = [];
+      const ue2tdata = [];
+      const ue3tdata = [];
+      const ue4tdata = [];
+      const ue5tdata = [];
+
+      const url = './ikh4.csv';
+
+      const response = await fetch(url);
+      const tabledata = await response.text();
+
+
+      const table = tabledata.split('\n').slice(1);;
+      table.forEach(row => {
+        const column = row.split(',');
+        const jahr = column[0];
+        const ue1t = column[1];
+        const ue2t = column[2];
+        const ue3t = column[3];
+        const ue4t = column[4];
+        const ue5t = column[5];
+
+        labels.push(jahr);
+        ue1tdata.push(ue1t);
+        ue2tdata.push(ue2t);
+        ue3tdata.push(ue3t);
+        ue4tdata.push(ue4t);
+        ue5tdata.push(ue5t);
+      });
+      // setting the name of the datacolumn "ue1t" by using slice() to exclude everything but the name
+      const ue1tname = ue1tdata.slice(0,1);
+      const ue2tname = ue2tdata.slice(0,1);
+      const ue3tname = ue3tdata.slice(0,1);
+      const ue4tname = ue4tdata.slice(0,1);
+      const ue5tname = ue5tdata.slice(0,1);
+
+      return {
+          	    labels,
+                ue1tdata, ue1tname,
+                ue2tdata, ue2tname,
+                ue3tdata, ue3tname,
+                ue4tdata, ue4tname,
+                ue5tdata, ue5tname,
+              }
+    }
+  </script>
+
+</body>
+
+</html>
