@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>I-VE-1: Trinkwasserquantität</title>
+  <title>I-WW-1: Grundwasserstand</title>
   <!-- CSS -->
   <style>
     * {
@@ -96,14 +96,14 @@
         labels: datapoints.labels,
 
         datasets: [{
-          label: /*datapoints.ueberanzahlname*/'Überschreitung mittlerer höchster GW-stand 1971-2021 - Referenzmessstellen Hamburg Wasser',
+          label: /*datapoints.ueberanzahlname*/'Überschreitung mittlerer höchster Grundwasserstand 1961-2021',
           type: 'bar',
           data: datapoints.ueberanzahldata,
           backgroundColor: ['#003063'],
           borderColor: ['#003063'],
         },
           {
-          label: /*datapoints.unteranzahlname*/'Unterschreitung mittlerer niedrigster GW-stand 1971-2021 - Referenzmessstellen Hamburg Wasser',
+          label: /*datapoints.unteranzahlname*/'Unterschreitung mittlerer niedrigster Grundwasserstand 1671-2021',
           type: 'bar',
           data: datapoints.unteranzahldata,
           backgroundColor: ['#e10019'],
@@ -120,15 +120,12 @@
           skipNull: true,
           scales: {
             x: {
-              min: '1971',
+              min: '1961',
               max: '2021',
               stacked: true,
               beginAtZero: true,
               ticks: {
                 stepSize: 2
-              },
-              ticks: {
-                stepSize: 1
               },
             },
             y: {
@@ -192,7 +189,8 @@
               display:true,
               position: 'top',
               align: 'center',
-              text: 'I-VE-1: Trinkwasserquantität',
+              //text: 'I-WW-1: Grundwasserstand',
+              text: 'I-WW-1: Wie hoch war der Grundwasserstand 1971-2021 ?',
               color: 'black',
               font: {
                 size: 14
@@ -202,7 +200,7 @@
               display:true,
               position: 'bottom',
               align: 'end',
-              text: 'Datenquelle: Hamburg Wasser (Referenzmessstellen)',
+              text: 'Datenquelle: BUKEA (Grundwassermessnetz)',
               color: 'black',
               font: {
                 size: 12
@@ -228,7 +226,7 @@
       const ueberanzahldata = [];
       const unteranzahldata = [];
 
-      const url = './ive1.csv';
+      const url = './iww1.csv';
 
       const response = await fetch(url);
       const tabledata = await response.text();
