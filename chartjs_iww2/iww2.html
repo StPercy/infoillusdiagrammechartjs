@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>I-WW-2: Grundwassertemperatur</title>
+  <!-- CSS -->
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  color:black;
+}
+
+.chartCard {
+  width: 100vw;
+  height: calc(100vh - 40px);
+  background: 'white';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chartBox {
+  width: 800px;
+  height: 450px;
+  padding: 20px;
+  /*border-radius: 20px;*/
+   border: solid 1px rgba(0, 48, 99, 1);
+  background: white;
+}
+@media only screen and (max-width: 800px) {
+  .chartBox {
+    width: 90%;
+    height: 45%;
+    margin: 10px;
+    padding: 20px;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .chartBox {
+    width: 90%;
+    height: 45%;
+    margin: 10px;
+    padding: 20px;
+  }
+}
+@media only screen and (max-width: 450px) {
+  .chartBox {
+    width: 90%;
+    height: 45%;
+    margin: 10px;
+    padding: 20px;
+  }
+}
+@media only screen and (max-width: 380px) {
+  .chartBox {
+    width: 90%;
+    height: 45%;
+    margin: 0;
+    padding: 20px;
+  }
+}
+@media only screen and (max-width: 281px) {
+  .chartBox {
+    width: 90%;
+    height: 45%;
+    margin: 10px;
+    padding: 20px;
+  }
+}
+  </style>
+</head>
+
+<!-- HTML -->
+<body>
+<div class="chartCard">
+    <div class="chartBox style="position: relative;>
+      <canvas id="myChart"></canvas>
+      <!-- <button onclick="getData()">get Data in Console</button> -->
+    </div>
+  </div>
+
+<!-- JS Scripts -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // 1. step use this function from below
+    drawChart();
+
+    // setup and 1.1 step implementing async function drawChart()
+    async function drawChart() {
+      const datapoints = await getData();
+      const data = {
+        //labels on x-axis:
+        labels: datapoints.labels,
+
+        datasets: [
+        {
+          label: /*datapoints.messstelle752name*/'Messstelle 752 (Geest)',
+          type: 'line',
+          data: datapoints.messstelle752data,
+          backgroundColor: ['#e10019'],
+          borderColor: ['#e10019'],
+          pointRadius: 3,
+
+        },
+        {
+          label: /*datapoints.messstelle5953name*/'Messstelle 5953 (Marsch)',
+          type: 'line',
+          data: datapoints.messstelle5953data,
+          backgroundColor: [' #666'],
+          borderColor: [' #666'],
+          pointRadius: 3,
+        },
+        {
+          label: /*datapoints.messstelle7951name*/'Messstelle 7951 (Geest)',
+          type: 'line',
+          data: datapoints.messstelle7951data,
+          backgroundColor: ['#003063'],
+          borderColor: ['#003063'],
+          pointRadius: 3,
+        },
+        ]
+      };
+
+      // config
+      const config = {
+        type: 'line',
+        data,
+        options: {
+          skipNull: true,
+          scales: {
+            x: {
+              min: '2006',
+              max: '2021',
+            },
+            y: {
+              beginAtZero: true,
+              ticks: {
+                stepSize: 1
+              },
+              min: 5.0,
+              max: 15.0,
+              title: {
+                display: true,
+                text: 'Mittel der Grundwassertemperatur im hydrologischen Jahr (°C)',
+                color: 'black',
+                align: 'start',
+                font: {
+                size: 12
+              },
+              },
+              grid: {
+                display: true,
+                drawBorder: true,
+              }
+            }
+          },
+
+          plugins: {
+            legend: {
+            display: true,
+            position: 'bottom',
+            labels: {
+              color: 'black',
+              usePointStyle: true,
+              pointStyle: 'rect',
+              font: {
+                size: 12
+              }
+            },
+            tooltip: {
+            usePointStyle: true,
+            }
+            },
+            title: {
+              display:true,
+              position: 'top',
+              align: 'center',
+              //text: 'I-WW-2: Grundwassertemperatur',
+              text: 'I-WW-2: Wie war die Grundwassertemperatur zwischen 2006 - 2021 ?',
+              color: 'black',
+              font: {
+                size: 14
+              }
+            },
+            subtitle: {
+              display:true,
+              position: 'bottom',
+              align: 'end',
+              text: 'Datenquelle: BUKEA (Grundwassermessnetz)',
+              color: 'black',
+              font: {
+                size: 12
+              }
+            }
+          },
+
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      };
+
+      // render init block
+      const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+      );
+    };
+
+    // 2. step fetch the data asynchronously:
+    async function getData(){
+      const labels = [];
+      const messstelle752data = [];
+      const messstelle5953data = [];
+      const messstelle7951data = [];
+
+
+      const url = './iww2.csv';
+
+      const response = await fetch(url);
+      const tabledata = await response.text();
+
+
+      const table = tabledata.split('\n').slice(1);;
+      table.forEach(row => {
+        const column = row.split(',');
+        const jahr = column[0];
+        const messstelle752 = column[1];
+        const messstelle5953 = column[2];
+        const messstelle7951 = column[3];
+
+
+        labels.push(jahr);
+        messstelle752data.push(messstelle752);
+        messstelle5953data.push(messstelle5953);
+        messstelle7951data.push(messstelle7951);
+
+      });
+      // setting the name of the datacolumn "messstelle752" by using slice() to exclude everything but the name
+      const messstelle752name = messstelle752data.slice(0,1);
+      const messstelle5953name = messstelle5953data.slice(0,1);
+      const messstelle7951name = messstelle7951data.slice(0,1);
+
+      return {
+          	    labels,
+                messstelle752data, messstelle752name,
+                messstelle5953data, messstelle5953name,
+                messstelle7951data, messstelle7951name,
+              }
+    }
+  </script>
+
+</body>
+
+</html>
