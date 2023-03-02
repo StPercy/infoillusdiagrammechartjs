@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>I-WW-5: Niedrigwasser an Alster und Wandse </title>
+  <title>I-WW-7: Hochwasserwasser an Alster und Wandse </title>
   <!-- CSS -->
   <style>
     * {
@@ -104,7 +104,7 @@
 
         datasets: [
         {
-            label: /*datapoints.apbsname*/'Bäckerbrücke/Alster:Niedrigwassertage im WHWinter (1.10. bis 31.3. des Folgejahres) ',
+            label: /*datapoints.apbsname*/'Bäckerbrücke/Alster:Hochwassertage im hyWinter (1.11. des Vorjahres bis 30.4.) ',
             type: 'line',
             data: datapoints.apbsdata,
             backgroundColor: ['#003063'],
@@ -117,7 +117,7 @@
             showLine: false
           },
           {
-            label: /*datapoints.apbwname*/'Bäckerbrücke/Alster:Niedrigwassertage im WHSommer (1.4. bis 30.9.) ',
+            label: /*datapoints.apbwname*/'Bäckerbrücke/Alster:Hochwassertage im hySommer (1.5. bis bis 31.10.) ',
             type: 'line',
             data: datapoints.apbwdata,
             backgroundColor: ['#e10019'],
@@ -130,7 +130,7 @@
             showLine: false
           },
           {
-            label: /*datapoints.apbsname*/'Wandsbeker Allee/Wandse:Niedrigwassertage im WHWinter (1.10. bis 31.3. des Folgejahres) ',
+            label: /*datapoints.apbsname*/'Wandsbeker Allee/Wandse:Hochwassertage im hyWinter (1.11. des Vorjahres bis 30.4.) ',
             type: 'line',
             data: datapoints.wawwdata,
             backgroundColor: ['#66b0ff'],
@@ -143,7 +143,7 @@
             showLine: false
           },
           {
-            label: /*datapoints.apbsname*/'Wandsbeker Allee/Wandse:Niedrigwassertage im WHSommer (1.4. bis 30.9.) ',
+            label: /*datapoints.apbsname*/'Wandsbeker Allee/Wandse:Hochwassertage im hySommer (1.5. bis bis 31.10.) ',
             type: 'line',
             data: datapoints.wawsdata,
             backgroundColor: ['#f79646'],
@@ -179,7 +179,7 @@
             y: {
               beginAtZero: true,
               ticks: {
-                stepSize: 50,
+                stepSize: 5,
                  //to delete the minus-sign on the y-axis:
                  callback: function(value, index ,values){
                   if (value <= 0 || value <= -70) {
@@ -189,11 +189,11 @@
                   }
                 },
               },
-              min: -150,
-              max: 150,
+              min: -20,
+              max: 10,
               title: {
                 display: true,
-                text: 'Niedrigwassertage (Anzahl basierend auf m³/s)',
+                text: 'Hochwasserwassertage (Anzahl basierend auf m³/s)',
                 color: 'black',
                 align: 'start',
                 font: {
@@ -282,7 +282,7 @@
               position: 'top',
               align: 'center',
               //text: 'I-WW-5: Nioedrigwasser an Alster und Wandse',
-              text: 'I-WW-5: Wie viele Niedrigwassertage gab es an Alster und Wandse zwischen 1969 - 2021 ?',
+              text: 'I-WW-5: Wie viele Hochwassertage gab es an Alster und Wandse zwischen 1969 - 2021 ?',
               color: 'black',
               font: {
                 size: 15
@@ -320,7 +320,7 @@
       const wawwdata = [];
       const wawsdata = [];
 
-      const url = './iww5.csv';
+      const url = './iww7.csv';
 
       const response = await fetch(url);
       const tabledata = await response.text();
