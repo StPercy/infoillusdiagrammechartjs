@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>I-WW-3: Mittlerer Abfluss an Alster und Wandse </title>
+  <title>I-WW-5: Nioedrigwasser an Alster und Wandse </title>
   <!-- CSS -->
   <style>
     * {
@@ -25,7 +25,7 @@
 
     .chartBox {
       width: 800px;
-      height: 400px;
+      height: 450px;
       padding: 20px;
       /*border-radius: 20px;*/
       border: solid 1px rgba(0, 48, 99, 1);
@@ -104,7 +104,7 @@
 
         datasets: [
         {
-            label: /*datapoints.apbsname*/'Alster/Pegel Bäckerbrücke: MQ hyWinter (1.11. des Vorjahres bis 30.4.) ',
+            label: /*datapoints.apbsname*/'Bäckerbrücke/Alster:Niedrigwwassertage im WHWinter (1.10. bis bis 31.3. des Folgejahres) ',
             type: 'line',
             data: datapoints.apbsdata,
             backgroundColor: ['#003063'],
@@ -117,7 +117,7 @@
             showLine: false
           },
           {
-            label: /*datapoints.apbwname*/'Alster/Pegel Bäckerbrücke: MQ hySommer (1.5. bis 31.10.) ',
+            label: /*datapoints.apbwname*/'Bäckerbrücke/Alster:Niedrigwwassertage im WHSommer (1.4. bis bis 30.9.) ',
             type: 'line',
             data: datapoints.apbwdata,
             backgroundColor: ['#e10019'],
@@ -130,7 +130,7 @@
             showLine: false
           },
           {
-            label: /*datapoints.apbsname*/'Wandsbeker Allee/Wandse: MQ hyWinter (1.11. des Vorjahres bis 30.4.) ',
+            label: /*datapoints.apbsname*/'Wandsbeker Allee/Wandse:Niedrigwwassertage im WHWinter (1.10. bis bis 31.3. des Folgejahres) ',
             type: 'line',
             data: datapoints.wawwdata,
             backgroundColor: ['#66b0ff'],
@@ -143,7 +143,7 @@
             showLine: false
           },
           {
-            label: /*datapoints.apbsname*/'Wandsbeker Allee/Wandse: MQ hySommer (1.5. bis 31.10.) ',
+            label: /*datapoints.apbsname*/'Wandsbeker Allee/Wandse:Niedrigwwassertage im WHSommer (1.4. bis bis 30.9.) ',
             type: 'line',
             data: datapoints.wawsdata,
             backgroundColor: ['#f79646'],
@@ -179,7 +179,7 @@
             y: {
               beginAtZero: true,
               ticks: {
-                stepSize: 2,
+                stepSize: 50,
                  //to delete the minus-sign on the y-axis:
                  callback: function(value, index ,values){
                   if (value <= 0 || value <= -70) {
@@ -189,15 +189,15 @@
                   }
                 },
               },
-              min: -6,
-              max: 10,
+              min: -150,
+              max: 150,
               title: {
                 display: true,
-                text: 'Mittlerer Abfluss (m³/s)',
+                text: 'Niedrigwassertage (Anzahl basierend auf m³/s)',
                 color: 'black',
                 align: 'start',
                 font: {
-                  size: 15
+                  size: 12
                 },
               },
               grid: {
@@ -281,8 +281,8 @@
               display: true,
               position: 'top',
               align: 'center',
-              //text: 'I-WW-3: Mittlerer Abfluss an Alster und Wandse',
-              text: 'I-WW-3: Was waren die Werte des mittleren Abflusses an Alster und Wandse 1969 - 2021 ?',
+              //text: 'I-WW-5: Nioedrigwasser an Alster und Wandse',
+              text: 'I-WW-5: Wie viele Niedrigwassertage gab es an Alster und Wandse zwischen 1969 - 2021 ?',
               color: 'black',
               font: {
                 size: 15
@@ -320,7 +320,7 @@
       const wawwdata = [];
       const wawsdata = [];
 
-      const url = './iww3.csv';
+      const url = './iww5.csv';
 
       const response = await fetch(url);
       const tabledata = await response.text();
