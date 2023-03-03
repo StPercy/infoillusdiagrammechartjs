@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>I-WB-4: Vegetationsperiode und Apfelblüte</title>
+  <title>I-SL-1: Sommerlicher Wärmeinseleffekt</title>
   <!-- CSS -->
   <style>
     * {
@@ -24,7 +24,7 @@
 
 .chartBox {
   width: 800px;
-  height: 500px;
+  height: 550px;
   padding: 20px;
   /*border-radius: 20px;*/
    border: solid 1px rgba(0, 48, 99, 1);
@@ -97,71 +97,76 @@
 
         datasets: [
         {
-          label: /*datapoints.g11jmvbname*/'Gleitendes 11-Jahres-Mittel Vegetationsbeginn',
+          label: /*datapoints.maxwiiname*/'Maximale Wärmeinselintensität',
           type: 'line',
-          data: datapoints.g11jmvbdata,
-          backgroundColor: ['#003063'],
-          borderColor: ['#003063'],
-          borderDash: [5, 5],
-          borderCapStyle: 'round',
-          pointRadius: 1,
-          showLine: true,
-          yAxisID:'y'
-        },
-        {
-          label: /*datapoints.vbname*/'Vegetationsbeginn',
-          type: 'line',
-          data: datapoints.vbdata,
-          backgroundColor: ['#66b0ff'],
-          borderColor: ['#66b0ff'],
-          showLine: true,
-          pointRadius: 1,
-          yAxisID:'y'
-        },
-        {
-          label: /*datapoints.g11jmabbname*/'Gleitendes 11-Jahres-Mittel Apfelblüte (beobachtet)',
-          type: 'line',
-          data: datapoints.g11jmabbdata,
+          data: datapoints.maxwiidata,
           backgroundColor: ['#e10019'],
           borderColor: ['#e10019'],
           borderDash: [5, 5],
           borderCapStyle: 'round',
-          pointRadius: 1,
+          pointStyle: 'rect',
+          pointRadius: 4,
           showLine: true,
-          yAxisID:'y'
+          yAxisID:'y2'
         },
         {
-          label: /*datapoints.bdabname*/'Beginn der Apfelblüte (beobachtet)',
+          label: /*datapoints.mitwiiname*/'Mittlere Wärmeinselintensität',
           type: 'line',
-          data: datapoints.bdabdata,
-          backgroundColor: ['#ff808e'],
-          borderColor: ['#ff808e'],
-          showLine: true,
-          pointRadius: 1,
-          yAxisID:'y'
-        },
-        {
-          label: /*datapoints.g11vename*/'Gleitendes 11-Jahres-Mittel Vegetationsende(beobachtet)',
-          type: 'line',
-          data: datapoints.g11vedata,
-          backgroundColor: ['#aaa'],
-          borderColor: ['#aaa'],
+          data: datapoints.mitwiidata,
+          backgroundColor: ['#003063'],
+          borderColor: ['#003063'],
           borderDash: [5, 5],
           borderCapStyle: 'round',
-          pointRadius: 1,
+          pointStyle: 'rect',
+          pointRadius: 4,
           showLine: true,
           yAxisID:'y2'
         },
         {
-          label: /*datapoints.vename*/'Vegetationsende',
-          type: 'line',
-          data: datapoints.vedata,
+          label: /*datapoints.wiik1name*/'Wärmeinselintensität <1 Kelvin',
+          type: 'bar',
+          data: datapoints.wiik1data,
           backgroundColor: ['#ccc'],
           borderColor: ['#ccc'],
-          showLine: true,
-          pointRadius: 1,
-          yAxisID:'y2'
+          width: 25,
+          barPercentage: 0.5,
+          pointstyle: 'rect',
+          yAxisID:'y'
         },
+        {
+          label: /*datapoints.wii13kname*/'Wärmeinselintensität 1-3 Kelvin',
+          type: 'bar',
+          data: datapoints.wii13kdata,
+          backgroundColor: ['#aaa'],
+          borderColor: ['#aaa'],
+          width: 25,
+          barPercentage: 0.5,
+          pointstyle: 'rect',
+          yAxisID:'y'
+        },
+        {
+          label: /*datapoints.wii36kname*/'Wärmeinselintensität >3-6 Kelvin',
+          type: 'bar',
+          data: datapoints.wii36kdata,
+          backgroundColor: ['#003063'],
+          borderColor: ['#003063'],
+          width: 25,
+          barPercentage: 0.5,
+          pointstyle: 'rect',
+          yAxisID:'y'
+        },
+        {
+          label: /*datapoints.g11vename*/'Wärmeinselintensität >6 Kelvin',
+          type: 'bar',
+          data: datapoints.g11vedata,
+          backgroundColor: ['#e10019'],
+          borderColor: ['#e10019'],
+          width: 25,
+          barPercentage: 0.5,
+          pointstyle: 'rect',
+          yAxisID:'y'
+        },
+
         ]
       };
 
@@ -173,28 +178,30 @@
           skipNull: true,
           scales: {
             x: {
-              min: '1951',
+              min: '2005',
               max: '2021',
               beginAtZero: true,
               ticks: {
                 stepSize: 1
               },
+              stacked: true
             },
             y: {
+              stacked: true,
               beginAtZero: true,
               ticks: {
                 stepSize: 10,
                 color: 'black',
               },
-              min: 60,
-              max: 160,
+              min: 0,
+              max: 100,
               title: {
                 display: true,
-                text: 'Beginn der Apfelblüte und Vegetationsbeginn (Tag im Jahr)',
+                text: 'Tage mit spezifischer max. Wärmeinselintensität im Sommer (Juni-August) nach Intensität [Anzahl]',
                 color: 'black',
                 align: 'start',
                 font: {
-                size: 12
+                size: 10
               },
               },
               grid: {
@@ -212,8 +219,9 @@
             },
              //setting two y axis, y axis right:
              y2: {
-              min: 160,
-              max: 320,
+              //stacked: true,
+              min: 0,
+              max: 10,
               beginAtZero: true,
               type: 'linear',
               position: 'right',
@@ -223,7 +231,7 @@
               },
               title: {
                 display: true,
-                text: 'Vegetationsende (Tag im Jahr)',
+                text: 'Mittlere bzw. maximale Wärmeinselintensität im Sommer (Juni-August) [Kelvin]',
                 color: 'black',
                 align: 'end',
                 font: {
@@ -253,8 +261,8 @@
               display:true,
               position: 'top',
               align: 'center',
-              //text: 'I-WB-4: Vegetationsperiode und Apfelblüte',
-              text: 'I-WB-4: Wann war der Beginn der Apfelblüte in den Jahren 1951 bis 2021 ?',
+              //text: 'I-SL-1: Sommerlicher Wärmeinseleffekt',
+              text: 'I-SL-1: Sommerlicher Wärmeinseleffekt ?',
               color: 'black',
               font: {
                 size: 14
@@ -264,7 +272,7 @@
               display:true,
               position: 'bottom',
               align: 'end',
-              text: 'Datenquelle: DWD (Phänologisches Beobachtungsnetz bzw. Klimamessstation Hamburg-Fuhlsbütllel)',
+              text: 'Datenquelle: DWD (Klimamessstationen Hamburg Neuwiedenthal und Fuhlsbüttel)',
               color: 'black',
               font: {
                 size: 12
@@ -287,15 +295,15 @@
     // 2. step fetch the data asynchronously:
     async function getData(){
       const labels = [];
-      const vbdata = [];
-      const g11jmvbdata = [];
-      const bdabdata = [];
-      const g11jmabbdata = [];
-      const vedata = [];
+      const mitwiidata = [];
+      const maxwiidata = [];
+      const wii13kdata = [];
+      const wiik1data = [];
+      const wii36kdata = [];
       const g11vedata = [];
 
 
-      const url = './iwb4.csv';
+      const url = './isl1.csv';
 
       const response = await fetch(url);
       const tabledata = await response.text();
@@ -305,39 +313,41 @@
       table.forEach(row => {
         const column = row.split(',');
         const jahr = column[0];
-        const vb = column[1];
-        const g11jmvb = column[2];
-        const bdab = column[3];
-        const g11jmabb = column[4];
-        const ve = column[5];
+        const maxwii = column[1];
+        const mitwii = column[2];
+        const wiik1 = column[3];
+        const wii13k = column[4];
+        const wii36k = column[5];
         const g11ve = column[6];
 
 
         labels.push(jahr);
-        vbdata.push(vb);
-        g11jmvbdata.push(g11jmvb);
-        bdabdata.push(bdab);
-        g11jmabbdata.push(g11jmabb);
-        vedata.push(ve);
+        maxwiidata.push(maxwii);
+        mitwiidata.push(mitwii);
+        wii13kdata.push(wii13k);
+        wiik1data.push(wiik1);
+        wii36kdata.push(wii36k);
         g11vedata.push(g11ve);
 
       });
-      // setting the name of the datacolumn "vb" by using slice() to exclude everything but the name
-      const vbname = vbdata.slice(0,1);
-      const g11jmvbname = g11jmvbdata.slice(0,1);
-      const bdabname = bdabdata.slice(0,1);
-      const g11jmabbname = g11jmabbdata.slice(0,1);
-      const vename = vedata.slice(0,1);
+      // setting the name of the datacolumn "mitwii" by using slice() to exclude everything but the name
+
+      const maxwiiname = maxwiidata.slice(0,1);
+      const mitwiiname = mitwiidata.slice(0,1);
+      const wii13kname = wii13kdata.slice(0,1);
+      const wiik1name = wiik1data.slice(0,1);
+      const wii36kname = wii36kdata.slice(0,1);
       const g11vename = g11vedata.slice(0,1);
 
 
       return {
           	    labels,
-                vbdata, vbname,
-                g11jmvbdata, g11jmvbname,
-                bdabdata, bdabname,
-                g11jmabbdata, g11jmabbname,
-                vedata, vename,
+                maxwiidata, maxwiiname,
+                mitwiidata, mitwiiname,
+
+                wii13kdata, wii13kname,
+                wiik1data, wiik1name,
+                wii36kdata, wii36kname,
                 g11vedata, g11vename,
               }
     }
