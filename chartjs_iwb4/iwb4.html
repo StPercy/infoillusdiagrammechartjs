@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>I-WB-4: Vegetationsperiode und Apfelblüte</title>
+  <!-- CSS -->
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  color:black;
+}
+
+.chartCard {
+  width: 100vw;
+  height: calc(100vh - 40px);
+  background: 'white';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chartBox {
+  width: 800px;
+  height: 500px;
+  padding: 20px;
+  /*border-radius: 20px;*/
+   border: solid 1px rgba(0, 48, 99, 1);
+  background: white;
+}
+@media only screen and (max-width: 800px) {
+  .chartBox {
+    width: 90%;
+    height: 45%;
+    margin: 10px;
+    padding: 20px;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .chartBox {
+    width: 90%;
+    height: 45%;
+    margin: 10px;
+    padding: 20px;
+  }
+}
+@media only screen and (max-width: 450px) {
+  .chartBox {
+    width: 90%;
+    height: 45%;
+    margin: 10px;
+    padding: 20px;
+  }
+}
+@media only screen and (max-width: 380px) {
+  .chartBox {
+    width: 90%;
+    height: 45%;
+    margin: 0;
+    padding: 20px;
+  }
+}
+@media only screen and (max-width: 281px) {
+  .chartBox {
+    width: 90%;
+    height: 45%;
+    margin: 10px;
+    padding: 20px;
+  }
+}
+  </style>
+</head>
+
+<!-- HTML -->
+<body>
+<div class="chartCard">
+    <div class="chartBox style="position: relative;>
+      <canvas id="myChart"></canvas>
+      <!-- <button onclick="getData()">get Data in Console</button> -->
+    </div>
+  </div>
+
+<!-- JS Scripts -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // 1. step use this function from below
+    drawChart();
+
+    // setup and 1.1 step implementing async function drawChart()
+    async function drawChart() {
+      const datapoints = await getData();
+      const data = {
+        //labels on x-axis:
+        labels: datapoints.labels,
+
+        datasets: [
+        {
+          label: /*datapoints.g11jmvbname*/'Gleitendes 11-Jahres-Mittel Vegetationsbeginn',
+          type: 'line',
+          data: datapoints.g11jmvbdata,
+          backgroundColor: ['#003063'],
+          borderColor: ['#003063'],
+          borderDash: [5, 5],
+          borderCapStyle: 'round',
+          pointRadius: 1,
+          showLine: true,
+          yAxisID:'y'
+        },
+        {
+          label: /*datapoints.vbname*/'Vegetationsbeginn',
+          type: 'line',
+          data: datapoints.vbdata,
+          backgroundColor: ['#66b0ff'],
+          borderColor: ['#66b0ff'],
+          showLine: true,
+          pointRadius: 1,
+          yAxisID:'y'
+        },
+        {
+          label: /*datapoints.g11jmabbname*/'Gleitendes 11-Jahres-Mittel Apfelblüte (beobachtet)',
+          type: 'line',
+          data: datapoints.g11jmabbdata,
+          backgroundColor: ['#e10019'],
+          borderColor: ['#e10019'],
+          borderDash: [5, 5],
+          borderCapStyle: 'round',
+          pointRadius: 1,
+          showLine: true,
+          yAxisID:'y'
+        },
+        {
+          label: /*datapoints.bdabname*/'Beginn der Apfelblüte (beobachtet)',
+          type: 'line',
+          data: datapoints.bdabdata,
+          backgroundColor: ['#ff808e'],
+          borderColor: ['#ff808e'],
+          showLine: true,
+          pointRadius: 1,
+          yAxisID:'y'
+        },
+        {
+          label: /*datapoints.g11vename*/'Gleitendes 11-Jahres-Mittel Vegetationsende(beobachtet)',
+          type: 'line',
+          data: datapoints.g11vedata,
+          backgroundColor: ['#aaa'],
+          borderColor: ['#aaa'],
+          borderDash: [5, 5],
+          borderCapStyle: 'round',
+          pointRadius: 1,
+          showLine: true,
+          yAxisID:'y2'
+        },
+        {
+          label: /*datapoints.vename*/'Vegetationsende',
+          type: 'line',
+          data: datapoints.vedata,
+          backgroundColor: ['#ccc'],
+          borderColor: ['#ccc'],
+          showLine: true,
+          pointRadius: 1,
+          yAxisID:'y2'
+        },
+        ]
+      };
+
+      // config
+      const config = {
+        type: 'line',
+        data,
+        options: {
+          skipNull: true,
+          scales: {
+            x: {
+              min: '1951',
+              max: '2021',
+              beginAtZero: true,
+              ticks: {
+                stepSize: 1
+              },
+            },
+            y: {
+
+              beginAtZero: true,
+              ticks: {
+                stepSize: 10,
+                color: 'black',
+              },
+              min: 60,
+              max: 160,
+              title: {
+                display: true,
+                text: 'Beginn der Apfelblüte und Vegetationsbeginn (Tag im Jahr)',
+                color: 'black',
+                align: 'start',
+                font: {
+                size: 12
+              },
+              },
+              grid: {
+                display: true,
+                drawBorder: true,
+                //black x-axis y-0-line:
+                color: (context) => {
+                  if(context.tick.value === 0) {
+                    return 'black'
+                  } else {
+                    return 'lightgray'
+                  }
+                }
+              },
+            },
+             //setting two y axis, y axis right:
+             y2: {
+              //stacked: true,
+              min: 160,
+              max: 320,
+              beginAtZero: true,
+              type: 'linear',
+              position: 'right',
+              ticks: {
+                stepSize: 1,
+                color: '#ccc',
+              },
+              title: {
+                display: true,
+                text: 'Vegetationsende (Tag im Jahr)',
+                color: 'black',
+                align: 'end',
+                font: {
+                  size: 12
+                },
+              }
+            }
+          },
+
+          plugins: {
+            legend: {
+            display: true,
+            position: 'bottom',
+            labels: {
+              color: 'black',
+              usePointStyle: true,
+              pointStyle: 'rect',
+              font: {
+                size: 12
+              }
+            },
+            tooltip: {
+            usePointStyle: true,
+            }
+            },
+            title: {
+              display:true,
+              position: 'top',
+              align: 'center',
+              //text: 'I-WB-4: Vegetationsperiode und Apfelblüte',
+              text: 'I-WB-4: Wann war der Beginn der Apfelblüte in den Jahren 1951 bis 2021 ?',
+              color: 'black',
+              font: {
+                size: 14
+              }
+            },
+            subtitle: {
+              display:true,
+              position: 'bottom',
+              align: 'end',
+              text: 'Datenquelle: DWD (Phänologisches Beobachtungsnetz bzw. Klimamessstation Hamburg-Fuhlsbütllel)',
+              color: 'black',
+              font: {
+                size: 12
+              }
+            }
+          },
+
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      };
+
+      // render init block
+      const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+      );
+    };
+
+    // 2. step fetch the data asynchronously:
+    async function getData(){
+      const labels = [];
+      const vbdata = [];
+      const g11jmvbdata = [];
+      const bdabdata = [];
+      const g11jmabbdata = [];
+      const vedata = [];
+      const g11vedata = [];
+
+
+      const url = './iwb4.csv';
+
+      const response = await fetch(url);
+      const tabledata = await response.text();
+
+
+      const table = tabledata.split('\n').slice(1);;
+      table.forEach(row => {
+        const column = row.split(',');
+        const jahr = column[0];
+        const vb = column[1];
+        const g11jmvb = column[2];
+        const bdab = column[3];
+        const g11jmabb = column[4];
+        const ve = column[5];
+        const g11ve = column[6];
+
+
+        labels.push(jahr);
+        vbdata.push(vb);
+        g11jmvbdata.push(g11jmvb);
+        bdabdata.push(bdab);
+        g11jmabbdata.push(g11jmabb);
+        vedata.push(ve);
+        g11vedata.push(g11ve);
+
+      });
+      // setting the name of the datacolumn "vb" by using slice() to exclude everything but the name
+      const vbname = vbdata.slice(0,1);
+      const g11jmvbname = g11jmvbdata.slice(0,1);
+      const bdabname = bdabdata.slice(0,1);
+      const g11jmabbname = g11jmabbdata.slice(0,1);
+      const vename = vedata.slice(0,1);
+      const g11vename = g11vedata.slice(0,1);
+
+
+      return {
+          	    labels,
+                vbdata, vbname,
+                g11jmvbdata, g11jmvbname,
+                bdabdata, bdabname,
+                g11jmabbdata, g11jmabbname,
+                vedata, vename,
+                g11vedata, g11vename,
+              }
+    }
+
+
+  </script>
+
+</body>
+
+</html>
