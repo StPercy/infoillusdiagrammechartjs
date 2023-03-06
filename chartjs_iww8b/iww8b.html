@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>I-WW-8: Maximale Fliessgewässertemperaturen</title>
+  <title>I-WW-8b: Maximale Fliessgewässertemperaturen</title>
   <!-- CSS -->
   <style>
     * {
@@ -97,7 +97,7 @@
 
         datasets: [
         {
-          label: /*datapoints.tage20gradname*/'davon Tage mit Tmax > 20°C (Anzahl)',
+          label: /*datapoints.tage20gradname*/'davon Tage mit Tmax > 25°C',
           type: 'bar',
           data: datapoints.tage20graddata,
           backgroundColor: ['#990099'],
@@ -106,7 +106,7 @@
           barPercentage: 0.75,
         },
         {
-          label: /*datapoints.tagemax18gradname*/'Tage mit Tmax > 18°C (Anzahl)',
+          label: /*datapoints.tagemax18gradname*/'Tage mit Tmax > 22°C',
           type: 'bar',
           data: datapoints.tagemax18graddata,
           backgroundColor: ['#003063'],
@@ -126,8 +126,8 @@
           skipNull: true,
           scales: {
             x: {
-              min: '1997',
-              max: '2022',
+              min: '1989',
+              max: '2021',
               stacked: true,
               beginAtZero: true,
               ticks: {
@@ -195,8 +195,8 @@
               display:true,
               position: 'top',
               align: 'center',
-              //text: 'I-WW-8: Maximale Fliessgewässertemperaturen',
-              text: 'I-WW-8: Wie hoch war die maximale Fliessgewässertemperaturen 1997 - 2022 in der Äschen- und Barbenregion ?',
+              //text: 'I-WW-8b: Maximale Fliessgewässertemperaturen Brassenregion und Kaulbarsch-Flunder-Region',
+              text: 'I-WW-8b: Wie hoch war die maximale Fliessgewässertemperaturen 1989 - 2022 in der Brassenregion und Kaulbarsch-Flunder-Region ?',
               color: 'black',
               font: {
                 size: 14
@@ -232,7 +232,7 @@
       const tagemax18graddata = [];
       const tage20graddata = [];
 
-      const url = './iww8.csv';
+      const url = './iww8b.csv';
 
       const response = await fetch(url);
       const tabledata = await response.text();
@@ -242,8 +242,8 @@
       table.forEach(row => {
         const column = row.split(',');
         const jahr = column[0];
-        const tagemax18grad = column[2];
-        const tage20grad = column[3];
+        const tagemax18grad = column[1];
+        const tage20grad = column[2];
 
 
         labels.push(jahr);
