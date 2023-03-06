@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>S-NI-6: Trockenperioden </title>
+  <!-- CSS -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      color: black;
+    }
+
+    .chartCard {
+      width: 100vw;
+      height: calc(100vh - 40px);
+      background: 'white';
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chartBox {
+      width: 800px;
+      height: 550px;
+      padding: 20px;
+      /*border-radius: 20px;*/
+      border: solid 1px rgba(0, 48, 99, 1);
+      background: white;
+    }
+
+    @media only screen and (max-width: 800px) {
+      .chartBox {
+        width: 90%;
+        height: 45%;
+        margin: 10px;
+        padding: 20px;
+      }
+    }
+
+    @media only screen and (max-width: 500px) {
+      .chartBox {
+        width: 90%;
+        height: 45%;
+        margin: 10px;
+        padding: 20px;
+      }
+    }
+
+    @media only screen and (max-width: 450px) {
+      .chartBox {
+        width: 90%;
+        height: 45%;
+        margin: 10px;
+        padding: 20px;
+      }
+    }
+
+    @media only screen and (max-width: 380px) {
+      .chartBox {
+        width: 90%;
+        height: 45%;
+        margin: 0;
+        padding: 20px;
+      }
+    }
+
+    @media only screen and (max-width: 281px) {
+      .chartBox {
+        width: 90%;
+        height: 45%;
+        margin: 10px;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<!-- HTML -->
+
+<body>
+  <div class="chartCard">
+    <div class="chartBox style=" position: relative;>
+      <canvas id="myChart"></canvas>
+      <!-- <button onclick="getData()">get Data in Console</button> -->
+    </div>
+  </div>
+
+  <!-- JS Scripts -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // 1. step use this function from below
+    drawChart();
+
+    // setup and 1.1 step implementing async function drawChart()
+    async function drawChart() {
+      const datapoints = await getData();
+      const data = {
+        //labels on x-axis:
+        labels: datapoints.labels,
+
+        datasets: [
+        {
+            label: /*datapoints.t1014name*/'Trockenperiode 10-14 Tage',
+            type: 'bar',
+            data: datapoints.t1014data,
+            backgroundColor: ['#ccc'],
+            borderColor: ['#ccc'],
+            width: 25,
+            barPercentage: 0.5,
+            pointstyle: 'rect',
+            //4 setting two y axes we define a yAxisID
+            yAxisID:'y'
+          },
+          {
+            label: /*datapoints.t3wochenname*/'Trockenperiode bis 3 Wochen',
+            type: 'bar',
+            data: datapoints.t3wochendata,
+            backgroundColor: ['#66b0ff'],
+            borderColor: ['#66b0ff'],
+            width: 25,
+            barPercentage: 0.5,
+            pointstyle: 'rect',
+            //4 setting two y axes we define a yAxisID
+            yAxisID:'y'
+          },
+          {
+            label: /*datapoints.t4wochenname*/'Trockenperiode bis 4 Wochen',
+            type: 'bar',
+            data: datapoints.t4wochendata,
+            backgroundColor: ['#007bff'],
+            borderColor: ['#007bff'],
+            width: 25,
+            barPercentage: 0.5,
+            pointstyle: 'rect',
+            //4 setting two y axes we define a yAxisID
+            yAxisID:'y'
+          },
+          {
+            label: /*datapoints.t5wochenname*/'Trockenperiode bis 5 Wochen',
+            type: 'bar',
+            data: datapoints.t5wochendata,
+            backgroundColor: ['#003063'],
+            borderColor: ['#003063'],
+            width: 25,
+            barPercentage: 0.5,
+            pointstyle: 'rect',
+            //4 setting two y axes we define a yAxisID
+            yAxisID:'y'
+          },
+          {
+            label: /*datapoints.tueber5wochenname*/'Trockenperiode bis 5 Wochen',
+            type: 'bar',
+            data: datapoints.tueber5wochendata,
+            backgroundColor: ['#e10019'],
+            borderColor: ['#e10019'],
+            width: 25,
+            barPercentage: 0.5,
+            pointstyle: 'rect',
+            //4 setting two y axes we define a yAxisID
+            yAxisID:'y'
+          },
+        {
+            label: /*datapoints.titname*/'Tage innerhalb von Trockenperioden',
+            type: 'line',
+            data: datapoints.titdata,
+            backgroundColor: ['#000'],
+            borderColor: ['#000'],
+            borderDash: [5, 5],
+            borderCapStyle: 'round',
+            pointStyle: 'rectRot',
+            pointRadius: 4,
+            usePointStyle: true,
+            showLine: false,
+            //4 setting two y axes we define a yAxisID Tage innerhalb von Trockenperioden (tit)
+            yAxisID:'tit'
+          },
+
+
+        ]
+      };
+
+      // config
+      const config = {
+        type: 'bar',
+        data,
+        options: {
+          scales: {
+
+            x: {
+              min: '1961',
+              max: '2021',
+              stacked: true,
+              beginAtZero: true,
+              ticks: {
+                //stepSize: 2
+              },
+            },
+
+            y: {
+              //setting two y axis, y axis left:
+              beginAtZero: true,
+              type: 'linear',
+              position: 'left',
+              stacked: true,
+              ticks: {
+                stepSize: 1,
+                color: '#0056b3',
+              },
+              min: 0,
+              max: 13,
+              title: {
+                display: true,
+                text: 'Trockenperioden* April bis September (Anzahl)',
+                color: 'black',
+                align: 'start',
+                font: {
+                  size: 15
+                },
+              },
+              grid: {
+                display: true,
+                drawBorder: true,
+              }
+            },
+            //setting two y axis, y axis right:
+            tit: {
+              min: 0,
+              max: 130,
+              beginAtZero: true,
+              type: 'linear',
+              position: 'right',
+              ticks: {
+                stepSize: 10,
+                color: '#000',
+              },
+              title: {
+                display: true,
+                text: 'Tage innerhalb von Trockenperioden April-September (Anzahl)',
+                color: 'black',
+                align: 'end',
+                font: {
+                  size: 15
+                },
+              }
+            }
+          },
+
+          plugins: {
+            legend: {
+              display: true,
+              position: 'bottom',
+
+               //beacuse we configured our legend pointStyle below, we have to insert a onClick() function 😉
+               onClick: (click, legendItem, legend) => {
+                  console.log(legend.legendItems);
+                  const datasets = legend.legendItems.map((dataset, index) => {
+                    return dataset.text
+                  });
+
+                  const index = datasets.indexOf(legendItem.text);
+                  if(legend.chart.isDatasetVisible(index) === true) {
+                    legend.chart.hide(index)
+                  } else {
+                    legend.chart.show(index)
+                  };
+                },
+              labels: {
+                // adjusting legend Style to type and pointStyle of dataset:
+                usePointStyle: true,
+                generateLabels: (chart) => {
+                  let visibility = [];
+                  for(let i = 0; i < chart.data.datasets.length; i++) {
+                    if(chart.isDatasetVisible(i) === true ) {
+                      visibility.push(false)
+                    } else {
+                      visibility.push(true)
+                    }
+                  };
+
+                  let pointStyle = [];
+                  chart.data.datasets.forEach(dataset => {
+                    if(dataset.type === 'line') {
+                      pointStyle.push('rectRot')
+                    } else {
+                      pointStyle.push('rect')
+                    }
+                  });
+
+                  return chart.data.datasets.map(
+                    (dataset, index) => ({
+                      text: dataset.label,
+                      fillStyle: dataset.backgroundColor,
+                      strokeStyle: dataset.borderColor,
+                      pointStyle: pointStyle[index],
+                      hidden: visibility[index]
+                    })
+                  )
+                },
+                color: 'black',
+
+                //pointStyle: 'rect',
+                font: {
+                  size: 12
+                }
+              },
+              tooltip: {
+                usePointStyle: true,
+              }
+            },
+            title: {
+              display: true,
+              position: 'top',
+              align: 'center',
+              //text: 'S-NI-6: Trockenperioden',
+              text: 'S-NI-6: Wie lang waren die Trockenperioden von 1961 bis 2021?',
+              color: 'black',
+              font: {
+                size: 15
+              }
+            },
+            subtitle:
+            {
+              display: true,
+              position: 'bottom',
+              align: 'start',
+              text: ['*Trockenperiode: Ereignis mit <= 0,3 mm an mindestens 10 Tagen in Folge mit einem möglichen Unterbrechungstag', 'Datenquelle: DWD (Niederschlagsmessungen)'],
+              color: 'black',
+              font: {
+                size: 10
+              }
+            },
+
+          },
+
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      };
+
+      // render init block
+      const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+      );
+    };
+
+    // 2. step fetch the data asynchronously:
+    async function getData() {
+      const labels = [];
+      const t1014data = [];
+      const t3wochendata = [];
+      const t4wochendata = [];
+      const t5wochendata = [];
+      const tueber5wochendata = [];
+      const titdata = [];
+
+      const url = './sni6.csv';
+
+      const response = await fetch(url);
+      const tabledata = await response.text();
+
+
+      const table = tabledata.split('\n').slice(1);;
+      table.forEach(row => {
+        const column = row.split(',');
+        const jahr = column[0];
+        const t1014 = column[1];
+        const t3wochen = column[2];
+        const t4wochen = column[3];
+        const t5wochen = column[4];
+        const tueber5wochen = column[5];
+        const tit = column[6];
+
+        labels.push(jahr);
+        t1014data.push(t1014);
+        t3wochendata.push(t3wochen);
+        t4wochendata.push(t4wochen);
+        t5wochendata.push(t5wochen);
+        tueber5wochendata.push(tueber5wochen);
+        titdata.push(tit);
+      });
+      // setting the name of the datacolumn "t1014" by using slice() to exclude everything but the name
+      const t1014name = t1014data.slice(0, 1);
+      const t3wochenname = t3wochendata.slice(0, 1);
+      const t4wochenname = t4wochendata.slice(0, 1);
+      const t5wochenname = t5wochendata.slice(0, 1);
+      const tueber5wochenname = tueber5wochendata.slice(0, 1);
+      const titname = titdata.slice(0, 1);
+
+      return {
+        labels,
+        t1014data, t1014name,
+        t3wochendata, t3wochenname,
+        t4wochendata, t4wochenname,
+        t5wochendata, t5wochenname,
+        tueber5wochendata, tueber5wochenname,
+        titdata, titname,
+      }
+    }
+  </script>
+
+</body>
+
+</html>
