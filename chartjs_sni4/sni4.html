@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>S-NI-4: Jahresniederschlag</title>
+  <!-- CSS -->
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  color:black;
+}
+
+.chartCard {
+  width: 100vw;
+  height: calc(100vh - 40px);
+  background: 'white';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chartBox {
+  width: 800px;
+  height: 400px;
+  padding: 20px;
+  /*border-radius: 20px;*/
+   border: solid 1px rgba(0, 48, 99, 1);
+  background: white;
+}
+@media only screen and (max-width: 800px) {
+  .chartBox {
+    width: 90%;
+    height: 45%;
+    margin: 10px;
+    padding: 20px;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .chartBox {
+    width: 90%;
+    height: 45%;
+    margin: 10px;
+    padding: 20px;
+  }
+}
+@media only screen and (max-width: 450px) {
+  .chartBox {
+    width: 90%;
+    height: 45%;
+    margin: 10px;
+    padding: 20px;
+  }
+}
+@media only screen and (max-width: 380px) {
+  .chartBox {
+    width: 90%;
+    height: 45%;
+    margin: 0;
+    padding: 20px;
+  }
+}
+@media only screen and (max-width: 281px) {
+  .chartBox {
+    width: 90%;
+    height: 45%;
+    margin: 10px;
+    padding: 20px;
+  }
+}
+  </style>
+</head>
+
+<!-- HTML -->
+<body>
+<div class="chartCard">
+    <div class="chartBox style="position: relative;>
+      <canvas id="myChart"></canvas>
+      <!-- <button onclick="getData()">get Data in Console</button> -->
+    </div>
+  </div>
+
+<!-- JS Scripts -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // 1. step use this function from below
+    drawChart();
+
+    // setup and 1.1 step implementing async function drawChart()
+    async function drawChart() {
+      const datapoints = await getData();
+      const data = {
+        //labels on x-axis:
+        labels: datapoints.labels,
+
+        datasets: [
+        {
+          label: /*datapoints.jahressummename*/'Jahressumme (hydrologisches Jahr) ⇗',
+          type: 'bar',
+          data: datapoints.jahressummedata,
+          backgroundColor: ['#004a99'],
+          borderColor: ['#004a99'],
+        },
+        {
+          label: /*datapoints.g11jsname*/'Gleitende 11-Jahressumme ⇗',
+          type: 'line',
+          data: datapoints.g11jsdata,
+          backgroundColor: ['#003063'],
+          borderColor: ['#003063'],
+          pointRadius: 1,
+          usePointStyle: true,
+        },
+        {
+          label: /*datapoints.m6190name*/'Mittel 1961-1990 ',
+          type: 'line',
+          data: datapoints.m6190data,
+          backgroundColor: ['#000'],
+          borderColor: ['#000'],
+          borderDash: [5, 5],
+          borderCapStyle: 'round',
+          pointStyle: 'round',
+          pointRadius: 0.5,
+          usePointStyle: true,
+        },
+        {
+          label: /*datapoints.m9121name*/'Mittel 1991-2021 ',
+          type: 'line',
+          data: datapoints.m9121data,
+          backgroundColor: ['#e10019'],
+          borderColor: ['#e10019'],
+          borderDash: [5, 5],
+          borderCapStyle: 'round',
+          pointStyle: 'round',
+          pointRadius: 0.5,
+          usePointStyle: true,
+        },
+
+
+        ]
+      };
+
+      // config
+      const config = {
+        type: 'bar',
+        data,
+        options: {
+          scales: {
+
+            x: {
+              min: '1882',
+              max: '2021',
+              beginAtZero: true,
+              ticks: {
+                stepSize: 2
+              },
+            },
+
+            y: {
+              beginAtZero: true,
+              ticks: {
+                stepSize: 100
+              },
+              min: 0,
+              max: 1200,
+              title: {
+                display: true,
+                text: 'Niederschlagssumme (l/m²)',
+                color: 'black',
+                align: 'start',
+                font: {
+                size: 15
+              },
+              },
+              grid: {
+                display: true,
+                drawBorder: true,
+              }
+            }
+          },
+
+          plugins: {
+            legend: {
+            display: true,
+            position: 'bottom',
+            labels: {
+              color: 'black',
+              usePointStyle: true,
+              pointStyle: 'rect',
+              font: {
+                size: 12
+              }
+            },
+            tooltip: {
+            usePointStyle: true,
+            }
+            },
+            title: {
+              display:true,
+              position: 'top',
+              align: 'center',
+              //text: 'S-NI-4: Jahresniederschlag',
+              text: 'S-NI-4: Wie viele Liter pro m² Jahresniederschlag gab es in den Jahren 1882 bis 2021 ?',
+              color: 'black',
+              font: {
+                size: 14
+              }
+            },
+            subtitle: {
+              display:true,
+              position: 'bottom',
+              align: 'end',
+              text: 'Datenquelle: DWD (Niederschalgsmessungen)',
+              color: 'black',
+              font: {
+                size: 12
+              }
+            }
+          },
+
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      };
+
+      // render init block
+      const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+      );
+    };
+
+    // 2. step fetch the data asynchronously:
+    async function getData(){
+      const labels = [];
+      const jahressummedata = [];
+      const g11jsdata = [];
+      const m6190data = [];
+      const m9121data = [];
+
+      const url = './sni4.csv';
+
+      const response = await fetch(url);
+      const tabledata = await response.text();
+
+
+      const table = tabledata.split('\n').slice(1);;
+      table.forEach(row => {
+        const column = row.split(',');
+        const jahr = column[0];
+        const jahressumme = column[1];
+        const g11js = column[2];
+        const m6190 = column[3];
+        const m9121 = column[4];
+
+        labels.push(jahr);
+        jahressummedata.push(jahressumme);
+        g11jsdata.push(g11js);
+        m6190data.push(m6190);
+        m9121data.push(m9121);
+      });
+      // setting the name of the datacolumn "jahressumme" by using slice() to exclude everything but the name
+      const jahressummename = jahressummedata.slice(0,1);
+      const g11jsname = g11jsdata.slice(0,1);
+      const m6190name = m6190data.slice(0,1);
+      const m9121name = m9121data.slice(0,1);
+
+      return {
+          	    labels,
+                jahressummedata, jahressummename,
+                g11jsdata, g11jsname,
+                m6190data, m6190name,
+                m9121data, m9121name,
+              }
+    }
+  </script>
+
+</body>
+
+</html>
