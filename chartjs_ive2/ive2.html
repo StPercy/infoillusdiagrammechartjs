@@ -100,7 +100,8 @@
           data: datapoints.ueberschreitungendata,
           backgroundColor: ['#e10019'],
           borderColor: ['#e10019'],
-          tension: 0.4
+          width: 25,
+          barPercentage: 0.5,
         }]
       };
 
@@ -121,6 +122,17 @@
                 font: {
                 size: 15
               }
+              },
+              grid: {
+                display: true,
+                drawBorder: true,
+                color: (context) => {
+                  if(context.tick.value === 0) {
+                    return 'black'
+                  } else {
+                    return 'lightgray'
+                  }
+                }
               }
             }
           },
@@ -145,6 +157,7 @@
               position: 'top',
               align: 'center',
               text: 'I-VE-2: Spitzenwasserverbrauch',
+              text: 'I-VE-2: Wie viele Spitzenwasserverbrauchstage (über 400.000 m³ pro Tag) gab es 2008 - 2021 ?',
               color: 'black',
               font: {
                 size: 14
