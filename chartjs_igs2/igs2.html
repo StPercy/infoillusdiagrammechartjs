@@ -25,7 +25,7 @@
 
     .chartBox {
       width: 800px;
-      height: 400px;
+      height: 500px;
       padding: 20px;
       /*border-radius: 20px;*/
       border: solid 1px rgba(0, 48, 99, 1);
@@ -104,7 +104,7 @@
 
         datasets: [
         {
-            label: /*datapoints.hitzewellenname*/'Hitzewellen (unterschiedlicher Länge)',
+            label: /*datapoints.hitzewellenname*/'Hitzewellen (unterschiedlicher Länge) ⇗',
             type: 'line',
             data: datapoints.hitzewellendata,
             backgroundColor: ['#003063'],
@@ -119,7 +119,7 @@
             yAxisID:'hw'
           },
         {
-            label: /*datapoints.tagehitzewellenname*/'Tage innerhalb von Hitzwellen - Summe innerhalb von 10-Jahreszeitraum ⇘',
+            label: /*datapoints.tagehitzewellenname*/'Tage innerhalb von Hitzwellen ⇗',
             type: 'bar',
             data: datapoints.tagehitzewellendata,
             backgroundColor: ['#e10019'],
@@ -164,16 +164,24 @@
               max: 30,
               title: {
                 display: true,
-                text: 'Tage innerhalb von Hitzewellen',
+                text: 'Tage innerhalb von Hitzewellen - Summe im 10-Jahreszeitraum (Anzahl)',
                 color: 'black',
                 align: 'start',
                 font: {
-                  size: 15
+                  size: 12
                 },
               },
               grid: {
                 display: true,
                 drawBorder: true,
+                //black x-axis y-0-line:
+                color: (context) => {
+                  if(context.tick.value === 0) {
+                    return 'black'
+                  } else {
+                    return 'lightgray'
+                  }
+                }
               }
             },
             //setting two y axis, y axis right:
@@ -193,7 +201,7 @@
                 color: 'black',
                 align: 'end',
                 font: {
-                  size: 15
+                  size: 12
                 },
               }
             }
@@ -266,6 +274,7 @@
               position: 'top',
               align: 'center',
               text: 'I-GS-2: Hitzewellen',
+              //text: 'I-GS-2: Wieviele Tage innerhalb von Hitzewellen und Hitzewellen gab es?',
               color: 'black',
               font: {
                 size: 15

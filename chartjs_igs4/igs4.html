@@ -25,7 +25,7 @@
 
     .chartBox {
       width: 800px;
-      height: 400px;
+      height: 500px;
       padding: 20px;
       /*border-radius: 20px;*/
       border: solid 1px rgba(0, 48, 99, 1);
@@ -104,7 +104,7 @@
 
         datasets: [
         {
-            label: /*datapoints.beaname*/'Badestellen mit erreichter Alarmstufe (Anzahl)',
+            label: /*datapoints.beaname*/'Badestellen mit erreichter Alarmstufe ≈',
             type: 'line',
             data: datapoints.beadata,
             backgroundColor: ['#003063'],
@@ -119,11 +119,11 @@
             yAxisID:'bs'
           },
           {
-            label: /*datapoints.ts114name*/'1 - 14 Tage Sperrungen',
+            label: /*datapoints.ts114name*/'1 - 14 Tage Sperrungen ⤻',
             type: 'bar',
             data: datapoints.ts114data,
             backgroundColor: ['#ffe6e8'],
-            borderColor: ['#e10019'],
+            borderColor: ['#ffe6e8'],
             width: 25,
             barPercentage: 0.5,
             pointstyle: 'rect',
@@ -131,11 +131,11 @@
             yAxisID:'y'
           },
         {
-            label: /*datapoints.ts1528name*/'15 - 28 Tage Sperrungen',
+            label: /*datapoints.ts1528name*/'15 - 28 Tage Sperrungen ≈',
             type: 'bar',
             data: datapoints.ts1528data,
             backgroundColor: ['#ff808e'],
-            borderColor: ['#e10019'],
+            borderColor: ['#ff808e'],
             width: 25,
             barPercentage: 0.5,
             pointstyle: 'rect',
@@ -143,7 +143,7 @@
             yAxisID:'y'
           },
           {
-            label: /*datapoints.ts114name*/'über 1 Monat Sperrungen',
+            label: /*datapoints.ts114name*/'über 1 Monat Sperrungen ≈',
             type: 'bar',
             data: datapoints.ue1mdata,
             backgroundColor: ['#e10019'],
@@ -190,16 +190,23 @@
               max: 11,
               title: {
                 display: true,
-                text: 'Badestellensperrungen unterschiedlicher Länge',
+                text: 'Badestellen mit Sperrungen unterschiedlicher Länge (Anzahl)',
                 color: 'black',
                 align: 'start',
                 font: {
-                  size: 15
+                  size: 12
                 },
               },
               grid: {
                 display: true,
                 drawBorder: true,
+                color: (context) => {
+                  if(context.tick.value === 0) {
+                    return 'black'
+                  } else {
+                    return 'lightgray'
+                  }
+                }
               }
             },
             //setting two y axis, y axis right:
@@ -216,11 +223,11 @@
               },
               title: {
                 display: true,
-                text: 'Badestellen mit erreichter Alarmstufe',
+                text: 'Badestellen mit erreichter Alarmstufe (Anzahl)',
                 color: 'black',
                 align: 'end',
                 font: {
-                  size: 15
+                  size: 12
                 },
               }
             }
@@ -293,6 +300,7 @@
               position: 'top',
               align: 'center',
               text: 'I-GS-4: Cyanobakterien in Badegewässern',
+              //text: 'I-GS-4: Wie viele Badestellensperrungen und Alarmstufen aufgrund Cyanobakterienbelastung gab es 2002 - 2022?',
               color: 'black',
               font: {
                 size: 15

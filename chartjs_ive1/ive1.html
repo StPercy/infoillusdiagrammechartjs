@@ -96,14 +96,14 @@
         labels: datapoints.labels,
 
         datasets: [{
-          label: /*datapoints.ueberanzahlname*/'Überschreitung mittlerer höchster GW-stand 1971-2021 - Referenzmessstellen Hamburg Wasser',
+          label: /*datapoints.ueberanzahlname*/'Überschreitung mittlerer höchster GW-stand 1971-2000 - Referenzmessstellen Hamburg Wasser ≈',
           type: 'bar',
           data: datapoints.ueberanzahldata,
           backgroundColor: ['#003063'],
           borderColor: ['#003063'],
         },
           {
-          label: /*datapoints.unteranzahlname*/'Unterschreitung mittlerer niedrigster GW-stand 1971-2021 - Referenzmessstellen Hamburg Wasser',
+          label: /*datapoints.unteranzahlname*/'Unterschreitung mittlerer niedrigster GW-stand 1971-2000 - Referenzmessstellen Hamburg Wasser ≈',
           type: 'bar',
           data: datapoints.unteranzahldata,
           backgroundColor: ['#e10019'],
@@ -150,7 +150,7 @@
               max: 12.0,
               title: {
                 display: true,
-                text: 'Monate mit Abweichung vom Referenzwert Periode 1971-2021 (Anzahl)',
+                text: 'Monate mit Abweichung vom Referenzwert Periode 1971-2000 (Anzahl)',
                 color: 'black',
                 align: 'start',
                 font: {
@@ -193,6 +193,7 @@
               position: 'top',
               align: 'center',
               text: 'I-VE-1: Trinkwasserquantität',
+              //text: 'I-VE-1: Wie verhielten sich die Abweichungen in der Trinkwasserquantität vom Referenzwert Periode 1971-2000?',
               color: 'black',
               font: {
                 size: 14

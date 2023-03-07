@@ -97,19 +97,19 @@
 
         datasets: [
         {
-          label: /*datapoints.g11jmname*/'Gleitendes 11-Jahres-Mittel ⇗',
+          label: /*datapoints.g11jmname*/'Gleitendes 11-Jahres-Mittel ⤻',
           type: 'line',
           data: datapoints.g11jmdata,
           backgroundColor: ['#e10019'],
           borderColor: ['#e10019'],
-          borderDash: [5, 5],
+          borderDash: [3,7],
           borderCapStyle: 'round',
           pointStyle: 'round',
           pointRadius: 1,
           usePointStyle: true,
         },
         {
-          label: /*datapoints.jahressummename*/'Jahressumme ⇗',
+          label: /*datapoints.jahressummename*/'Jahressumme ⤻',
           type: 'bar',
           data: datapoints.jahressummedata,
           backgroundColor: ['#ff6666'],
@@ -154,6 +154,14 @@
               grid: {
                 display: true,
                 drawBorder: true,
+                //black x-axis y-0-line:
+                color: (context) => {
+                  if(context.tick.value === 1000) {
+                    return 'black'
+                  } else {
+                    return 'lightgray'
+                  }
+                }
               }
             }
           },
@@ -179,6 +187,7 @@
               position: 'top',
               align: 'center',
               text: 'S-SO-8: Sonnenscheindauer',
+              //text: 'S-SO-8: Wie viele Stunden schien die Sonne in den Jahren 1951- 2021 ?',
               color: 'black',
               font: {
                 size: 14

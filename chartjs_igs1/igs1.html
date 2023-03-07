@@ -104,7 +104,7 @@
 
         datasets: [
           {
-            label: /*datapoints.heissetagename*/'Heiße Tage (Gebietsmittel für Hamburg)',
+            label: /*datapoints.heissetagename*/'Heiße Tage (Gebietsmittel für Hamburg) ≈',
             type: 'line',
             data: datapoints.heissetagedata,
             backgroundColor: ['#003063'],
@@ -114,7 +114,9 @@
             pointStyle: 'rectRot',
             pointRadius: 4,
             usePointStyle: true,
-            showLine: false
+            showLine: false,
+            //4 setting two y axes we define a yAxisID
+            yAxisID:'hw'
           },
           {
             label: /*datapoints.warntagename*/'Warntage im Warnkreis Hamburg ⇘',
@@ -124,7 +126,9 @@
             borderColor: ['#e10019'],
             width: 25,
             barPercentage: 0.5,
-            pointstyle: 'rect'
+            pointstyle: 'rect',
+            //4 setting two y axes we define a yAxisID
+            yAxisID:'y'
           },
 
         ]
@@ -149,7 +153,8 @@
             y: {
               beginAtZero: true,
               ticks: {
-                stepSize: 2
+                stepSize: 2,
+                color: '#e10019',
               },
               min: 0,
               max: 20,
@@ -165,6 +170,35 @@
               grid: {
                 display: true,
                 drawBorder: true,
+                //black x-axis y-0-line:
+                color: (context) => {
+                  if(context.tick.value === 0) {
+                    return 'black'
+                  } else {
+                    return 'lightgray'
+                  }
+                }
+              }
+            },
+              //setting two y axis, y axis right:
+              hw: {
+              min: 0,
+              max: 20,
+              beginAtZero: true,
+              type: 'linear',
+              position: 'right',
+              ticks: {
+                stepSize: 1,
+                color: '#003063',
+              },
+              title: {
+                display: true,
+                text: 'Heiße Tage (Anzahl)',
+                color: 'black',
+                align: 'end',
+                font: {
+                  size: 15
+                },
               }
             }
           },
@@ -236,6 +270,7 @@
               position: 'top',
               align: 'center',
               text: 'I-GS-1: Hitzewarnungen',
+              //text: 'I-GS-1: Wie viele Tage mit Hitzewarnungen gab es 2005 - 2021?',
               color: 'black',
               font: {
                 size: 15
@@ -245,7 +280,7 @@
               display: true,
               position: 'bottom',
               align: 'end',
-              text: 'Datenquelle: DWD (Hitzewarnungen)',
+              text: 'Datenquelle: DWD (Hitzewarndienst)',
               color: 'black',
               font: {
                 size: 12

@@ -96,7 +96,7 @@
 
         datasets: [
         {
-          label: /*datapoints.anzahlname*/'Hochwasserscheitel mit Thw 150 bis <250 cm über MThw',
+          label: /*datapoints.anzahlname*/'Hochwasserscheitel mit Thw 150 bis <250 cm über MThw ↷',
           type: 'bar',
           data: datapoints.anzahldata1,
           backgroundColor: ['#ccc'],
@@ -105,7 +105,7 @@
           barPercentage: 0.5,
         },
         {
-          label: /*datapoints.anzahlname*/'Hochwasserscheitel mit Thw 250 bis <350 cm über MThw',
+          label: /*datapoints.anzahlname*/'Hochwasserscheitel mit Thw 250 bis <350 cm über MThw ≈',
           type: 'bar',
           data: datapoints.anzahldata2,
           backgroundColor: ['#003063'],
@@ -114,7 +114,7 @@
           barPercentage: 0.5,
         },
         {
-          label: /*datapoints.anzahlname*/'Hochwasserscheitel mit Thw <=350 cm über MThw',
+          label: /*datapoints.anzahlname*/'Hochwasserscheitel mit Thw >=350 cm über MThw ↷',
           type: 'bar',
           data: datapoints.anzahldata3,
           backgroundColor: ['#e10019'],
@@ -152,6 +152,18 @@
                 size: 12,
                 weight: 'bold'
               }
+              },
+              grid: {
+                display: true,
+                drawBorder: true,
+                //black x-axis y-0-line:
+                color: (context) => {
+                  if(context.tick.value === 0) {
+                    return 'black'
+                  } else {
+                    return 'lightgray'
+                  }
+                }
               }
             }
           },

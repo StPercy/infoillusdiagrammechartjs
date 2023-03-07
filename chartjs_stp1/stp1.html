@@ -101,8 +101,8 @@
           data: datapoints.jahresmitteldata,
           backgroundColor: ['#e10019'],
           borderColor: ['#e10019'],
-          pointRadius: 1,
-
+          pointRadius: 0,
+          borderWidth: 2
         },
         {
           label: /*datapoints.m6190name*/'Mittel 1961-1990',
@@ -161,6 +161,13 @@
               grid: {
                 display: true,
                 drawBorder: true,
+                color: (context) => {
+                  if(context.tick.value === 6) {
+                    return 'black'
+                  } else {
+                    return 'lightgray'
+                  }
+                }
               }
             }
           },
@@ -186,6 +193,7 @@
               position: 'top',
               align: 'center',
               text: 'S-TP-1: Jahresmitteltemperatur',
+              //text: 'S-TP-1: Wie veränderte sich die Jahresmitteltemperatur von 1881 - 2021',
               color: 'black',
               font: {
                 size: 14

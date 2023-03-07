@@ -96,7 +96,7 @@
         labels: datapoints.labels,
 
         datasets: [{
-          label: /*datapoints.winteranzahlname*/'MQ hydrologischer Winter in m³/s',
+          label: /*datapoints.winteranzahlname*/'MQ hydrologischer Winter ≈',
           type: 'bar',
           data: datapoints.winteranzahldata,
           backgroundColor: ['#003063'],
@@ -105,7 +105,7 @@
           barPercentage: 0.75,
         },
           {
-          label: /*datapoints.sommeranzahlname*/'MQ hydrologischer Sommer in m³/s',
+          label: /*datapoints.sommeranzahlname*/'MQ hydrologischer Sommer ⇘',
           type: 'bar',
           data: datapoints.sommeranzahldata,
           backgroundColor: ['#e10019'],
@@ -114,7 +114,7 @@
           barPercentage: 0.75,
         },
         {
-          label: /*datapoints.wintermittelname*/'MQ hydrologischer Winter: Mittel 1961-1990 in m³/s',
+          label: /*datapoints.wintermittelname*/'MQ hydrologischer Winter: Mittel 1961-1990',
           type: 'line',
           data: datapoints.wintermitteldata,
           backgroundColor: ['#003063'],
@@ -126,7 +126,7 @@
           usePointStyle: true,
         },
         {
-          label: /*datapoints.wintermittelname*/'MQ hydrologischer Sommer: Mittel 1961-1990 in m³/s',
+          label: /*datapoints.wintermittelname*/'MQ hydrologischer Sommer: Mittel 1961-1990',
           type: 'line',
           data: datapoints.sommermitteldata,
           backgroundColor: ['#e10019'],
@@ -217,8 +217,8 @@
               display:true,
               position: 'top',
               align: 'center',
-              //text: 'I-WW-4: Mittlerer Abfluss der Elbe',
-              text: 'I-WW-4: Wie war der mittlere Abfluss der Elbe von 1961 - 2021 ?',
+              text: 'I-WW-4: Mittlerer Abfluss der Elbe',
+              //text: 'I-WW-4: Wie war der mittlere Abfluss der Elbe von 1961 - 2021 ?',
               color: 'black',
               font: {
                 size: 14

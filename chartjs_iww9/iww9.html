@@ -97,7 +97,7 @@
 
         datasets: [
         {
-          label: /*datapoints.mt1name*/'Mitteltemperatur von April bis Oktober',
+          label: /*datapoints.mt1name*/'Mitteltemperatur von April bis Oktober ⇗',
           type: 'line',
           data: datapoints.mt1data,
           backgroundColor: ['#e10019'],
@@ -109,7 +109,7 @@
 
         },
         {
-          label: /*datapoints.mt2name*/'Mitteltemperatur von 15.5. bis 15.9',
+          label: /*datapoints.mt2name*/'Mitteltemperatur von 15.5. bis 15.9 ⇗',
           type: 'line',
           data: datapoints.mt2data,
           backgroundColor: [' #003063'],
@@ -152,6 +152,14 @@
               grid: {
                 display: true,
                 drawBorder: true,
+                //black x-axis y-0-line:
+                color: (context) => {
+                  if(context.tick.value === 10) {
+                    return 'black'
+                  } else {
+                    return 'lightgray'
+                  }
+                }
               }
             }
           },
@@ -176,8 +184,8 @@
               display:true,
               position: 'top',
               align: 'center',
-              //text: 'I-WW-9: Wassertemperatur der Alster',
-              text: 'I-WW-9: Wie war die mittlere Wassertemperatur der Alster 1994 - 2021 ?',
+              text: 'I-WW-9: Wassertemperatur der Alster',
+              //text: 'I-WW-9: Wie war die mittlere Wassertemperatur der Alster 1994 - 2021 ?',
               color: 'black',
               font: {
                 size: 14

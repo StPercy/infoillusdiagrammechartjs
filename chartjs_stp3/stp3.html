@@ -96,18 +96,20 @@
         labels: datapoints.labels,
 
         datasets: [{
-          label: /*datapoints.heissetagename*/'Heiße Tage ⇗',
+          label: /*datapoints.heissetagename*/'Heiße Tage (Tmax ≥ 30°C) ⇗',
           type: 'bar',
           data: datapoints.heissetagedata,
           backgroundColor: ['#e10019'],
           borderColor: ['#e10019'],
+          barPercentage: 0.75,
         },
           {
-          label: /*datapoints.eistagename*/'Eistage ',
+          label: /*datapoints.eistagename*/'Eistage (Tmax < 0°C) ≈',
           type: 'bar',
           data: datapoints.eistagedata,
           backgroundColor: ['#003063'],
           borderColor: ['#003063'],
+          barPercentage: 0.75,
         },
         ]
       };
@@ -121,12 +123,8 @@
           scales: {
             x: {
               min: '1951',
-              max: '2020',
+              max: '2021',
               stacked: true,
-              beginAtZero: true,
-              ticks: {
-                stepSize: 2
-              },
               ticks: {
                 stepSize: 1
               },

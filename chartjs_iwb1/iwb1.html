@@ -25,7 +25,7 @@
 
     .chartBox {
       width: 800px;
-      height: 500px;
+      height: 525px;
       padding: 20px;
       /*border-radius: 20px;*/
       border: solid 1px rgba(0, 48, 99, 1);
@@ -104,7 +104,7 @@
 
         datasets: [
         {
-            label: /*datapoints.ts114name*/'Schadenhäufigkeit in der Wohngebäudeversicherung Sturm/Hagel in %',
+            label: /*datapoints.ts114name*/'Schadenhäufigkeit in der Wohngebäudeversicherung Sturm/Hagel ≈',
             type: 'bar',
             data: datapoints.ts114data,
             backgroundColor: ['#003063'],
@@ -116,7 +116,7 @@
             yAxisID:'y'
           },
         {
-            label: /*datapoints.beaname*/'Schadendurchschnitt in der Wohngebäudeversicherung durch Sturm/Hagel in %)',
+            label: /*datapoints.beaname*/'Schadendurchschnitt in der Wohngebäudeversicherung durch Sturm/Hagel ⤻',
             type: 'line',
             data: datapoints.beadata,
             backgroundColor: ['#e10019'],
@@ -155,7 +155,7 @@
               position: 'left',
 
               ticks: {
-                stepSize: 1,
+                stepSize: 2,
                 color: '#003063',
               },
               min: 0,
@@ -188,7 +188,7 @@
               },
               title: {
                 display: true,
-                text: 'Schadendurchschnitt in der Wohngebäudeversicherung durch Sturm/Hagel in %',
+                text: 'Schadendurchschnitt (Brutto-Aufwendung für Versicherungsfälle bezogen auf Anzahl der Schäden) (€)',
                 color: 'black',
                 align: 'end',
                 font: {
@@ -264,8 +264,8 @@
               display: true,
               position: 'top',
               align: 'center',
-              //text: 'I-WB-1: Gebäudeschäden durch Sturm und Hagel',
-              text: 'I-WB-1: Gebäudeschäden durch Sturm und Hagel ab 1997 bis 2020',
+              text: 'I-WB-1: Gebäudeschäden durch Sturm und Hagel',
+              //text: 'I-WB-1: Gebäudeschäden durch Sturm und Hagel ab 1997 bis 2020',
               color: 'black',
               font: {
                 size: 15

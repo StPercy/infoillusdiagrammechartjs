@@ -96,40 +96,40 @@
         labels: datapoints.labels,
 
         datasets: [{
-          label: /*datapoints.aepfelname*/'Ertragsschwankung Äpfel',
+          label: /*datapoints.aepfelname*/'Ertragsschwankung Äpfel ≈',
           type: 'bar',
           data: datapoints.aepfeldata,
           backgroundColor: ['#000'],
           borderColor: ['#000'],
           width: 25,
-          barPercentage: 0.75,
+          barPercentage: 1,
         },
           {
-          label: /*datapoints.birnenname*/'Ertragsschwankung Birnen',
+          label: /*datapoints.birnenname*/'Ertragsschwankung Birnen ≈',
           type: 'bar',
           data: datapoints.birnendata,
           backgroundColor: ['#ccc'],
           borderColor: ['#ccc'],
           width: 25,
-          barPercentage: 0.75,
+          barPercentage: 1,
         },
         {
-          label: /*datapoints.pflaumenname*/'Ertragsschwankung Pflaumen',
+          label: /*datapoints.pflaumenname*/'Ertragsschwankung Pflaumen ≈',
           type: 'bar',
           data: datapoints.pflaumendata,
           backgroundColor: ['#003063'],
           borderColor: ['#003063'],
           width: 25,
-          barPercentage: 0.75,
+          barPercentage: 1,
         },
         {
-          label: /*datapoints.pflaumenname*/'Ertragsschwankung Süßkirschen',
+          label: /*datapoints.pflaumenname*/'Ertragsschwankung Süßkirschen ≈',
           type: 'bar',
           data: datapoints.suesskirschendata,
           backgroundColor: ['#e10019'],
           borderColor: ['#e10019'],
           width: 25,
-          barPercentage: 0.75,
+          barPercentage: 1,
         },
         ]
       };
@@ -202,8 +202,8 @@
               display:true,
               position: 'top',
               align: 'center',
-              //text: 'I-WB-3: Ertragsschwankungen beim Baumobst',
-              text: 'I-WB-3: Wie fielen die Ertragsschwankungen beim Baumobst zwischen 2008 - 2021 aus?',
+              text: 'I-WB-3: Ertragsschwankungen beim Baumobst',
+              //text: 'I-WB-3: Wie fielen die Ertragsschwankungen beim Baumobst zwischen 2008 - 2021 aus?',
               color: 'black',
               font: {
                 size: 14
@@ -213,7 +213,7 @@
               display:true,
               position: 'bottom',
               align: 'end',
-              text: 'Datenquelle: Statistik Nord',
+              text: 'Datenquelle: Statistik Nord (Endgültige Ertragsschätzungen)',
               color: 'black',
               font: {
                 size: 12
