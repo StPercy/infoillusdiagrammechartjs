@@ -100,7 +100,7 @@
           data: datapoints.anzahldata1,
           backgroundColor: ['#e10019'],
           borderColor: ['#e10019'],
-          //tension: 0.4
+          barPercentage: 0.9,
         },
         {
           label: /*datapoints.anzahlname*/'Pegel Schöpfstelle (Sperrwerk Billwerder Bucht, Thw≥350 cm NHN)',
@@ -108,7 +108,7 @@
           data: datapoints.anzahldata2,
           backgroundColor: ['#003063'],
           borderColor: ['#003063'],
-          //tension: 0.4
+         barPercentage: 0.9,
         }]
       };
 
@@ -130,6 +130,17 @@
                 size: 15,
                 //weight: 'bold'
               }
+              },
+              grid: {
+                display: true,
+                drawBorder: true,
+                color: (context) => {
+                  if(context.tick.value === 0) {
+                    return 'black'
+                  } else {
+                    return 'lightgray'
+                  }
+                }
               }
             }
           },
