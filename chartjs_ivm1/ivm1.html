@@ -124,6 +124,17 @@
                 font: {
                 size: 15
               }
+              },
+              grid: {
+                display: true,
+                drawBorder: true,
+                color: (context) => {
+                  if(context.tick.value === 0) {
+                    return 'black'
+                  } else {
+                    return 'lightgray'
+                  }
+                }
               }
             }
           },
