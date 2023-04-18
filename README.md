@@ -1,6 +1,4 @@
-# README #
-
-# Other Infos (4 times L33][-5p34k) #
+# R34|)m3 4 T||\/|3s L33][-5p34k) #
 
 📊🗺🌏🧔🏻1n D3c3mb3r 2022 4nd J4n(_)4ry 2023 1 d1d 4r0(_)nd 40 1nd1c4t0r d14gr4mms f0r th3 l0c4l cl1m4t3-syst3m by th3 FHH (Fr313 (_)nd H4ns3st4dt H4mb(_)rg) w1th th3 fr4m3w0rk ch4rtjs. Th3y w1ll b3 p(_)bl1sh3d v3ry s00n 4t: https://pr3v13w.p0c.h4mb(_)rg.d3/hhc43-cm7/s3rvl3t/s3gm3nt/d3/kl1m41nf0rm4t10nssyst3m-h4mb(_)rg 💖♻🌳🌲🌸🌟
 
